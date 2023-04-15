@@ -10,60 +10,35 @@
  */
 int parse_cmd(char *cmd, char **argv)
 {
-	int i, j, len, k, n;
+	int argc = 0, i = 0, len = 0, j = 0;
+	char c, arg[MAX_ARGS + 1];
 
-	n = get_token_count(cmd);
-	argv = malloc(sizeof(char *) * (n + 1));
-
-	for (i = 0, len = 0, k = 0; 1; i++)
+	while (cmd[i] != '\0')
 	{
-		if ((cmd[i] == ' ' || cmd[i] == '\0') && len != 0)
-		{
-			argv[k] = malloc(sizeof(char) * len + 1);
-			for (j = i - len; j < len; j++)
-				argv[k][j] = cmd[j];
-			argv[k][len] = '\0';
-			k++;
-			len = 0;
-		}
-		else
-			len++;
+		while (cmd[i] == ' ')
+			i++;
 
-		if (cmd[i] == '\0')
-			break;
+		len = 0;
+		while ((c = cmd[i]) != '\0' && c != ' ')
+		{
+			arg[len] = c;
+			i++;
+			len++;
+		}
+		arg[len] = '\0';
+
+		argv[argc] = malloc(len + 1);
+		if (argv[argc] == NULL)
+			return (-1);
+
+		for (j = 0; j < len + 1; j++)
+			argv[argc][j] = arg[j];
+
+		argc++;
 	}
 
-	argv[k] = NULL;
+	argv[argc] = NULL;
 
-	return (n);
+	return (argc);
 }
 
-/**
- * get_token_count - returns the number of tockens
- *
- * @s: string
- *
- * Return: number of tockens
- */
-int get_token_count(char *s)
-{
-	int n = 0, i = 0, len = 0;
-
-	for (i = 0; s[i] != '\0'; i++)
-	{
-		if (s[i] == ' ')
-		{
-			if (len == 0)
-				continue;
-
-			n += 1;
-			len = 0;
-		}
-		else
-			len++;
-	}
-
-	if (len != 0) n++;
-
-	return (n);
-}

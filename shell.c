@@ -21,7 +21,8 @@ int main(int argc, char **argv)
 		print_str("$ ");
 		if (getline(&line_buffer, &line_size, stdin) != -1)
 		{
-			
+			if (run_cmd(line_buffer) == -1)
+				perror(argv[0]);
 		}
 		else
 			break;
@@ -37,24 +38,28 @@ int main(int argc, char **argv)
  * run_cmd - runs a command and waits for it to finish
  *
  * @line_buffer: the buffer that contains the command and it's arguments
- * 
+ *
  * Return: 0 on success, -1 on failure
  */
 int run_cmd(char *line_buffer)
 {
-	char *argv[10];
-	int child_pid;
-	int child_status;
+	char *argv[MAX_ARGS + 1];
+	int child_pid, child_status, n, j;
 
-	parse_cmd(line_buffer, argv);
+	n = parse_cmd(line_buffer, argv);
 
 	child_pid = fork();
 	if (child_pid == 0)
-		if (execve(argv[0], argv))
+	{
+		if (execve(argv[0], argv, NULL))
 			return (-1);
+	}
 	else
-		wait(child_status);
-	
+		wait(&child_status);
+
+	for (j = 0; j < n; j++)
+		free(argv[j]);
+
 	return (0);
 }
 

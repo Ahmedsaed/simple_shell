@@ -1,31 +1,33 @@
 #include "./../../main.h"
+#include <string.h>
 
 #define NC 4
 
 int main()
 {
-	int i, n, j;
-	char *cmd[NC];
-	char **argv;
-	
-	cmd[0] = "cmd s as tetetet";
-	cmd[1] = "cmd     s tt  w";
-	cmd[2] = "ls -l /tmp";
-	cmd[3] = "ls -l /tmp  ";
+    int i, argc;
+    char *cmd[] = {
+        "cmd s as tetetet",
+        "cmd     s tt  w",
+        "ls -l /tmp",
+        "ls -l /tmp  "
+    };
+    char *argv[MAX_ARGS + 1];
 
-	for (i = 0; i < NC; i++)
-	{
-		n = parse_cmd(cmd[0], argv);
-		
-		printf("Test Case %d:\n", i);
-		printf("Actual command: %s\n", cmd[i]);
-		printf("Pasrsed command: ");
-		for (j = 0; argv[j] != NULL; j++)
-			printf("%s ", argv[j]);
-		printf("\n");
-	}
+    for (i = 0; i < sizeof(cmd) / sizeof(cmd[0]); i++)
+    {
+        argc = parse_cmd(cmd[i], argv);
 
-	free(argv);
+        printf("Test Case %d:\n", i);
+        printf("Actual command: %s\n", cmd[i]);
+        printf("Parsed command: ");
+        for (int j = 0; j < argc; j++)
+            printf("%s ", argv[j]);
+        printf("\n");
 
-	return (1);
+        for (int j = 0; j < argc; j++)
+            free(argv[j]);
+    }
+
+    return 0;
 }
