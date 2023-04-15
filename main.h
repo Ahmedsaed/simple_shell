@@ -10,6 +10,9 @@
 
 void print_str(char *s);
 void flush(void);
+int run_cmd(char *line_buffer);
+int parse_cmd(char *cmd, char **argv);
+int get_token_count(char *s);
 
 
 #endif
