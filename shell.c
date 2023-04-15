@@ -43,15 +43,20 @@ int main(int argc, char **argv)
  */
 int run_cmd(char *line_buffer)
 {
-	char *argv[MAX_ARGS + 1];
+	char *argv[2]; /*  MAX_ARGS + 1*/
 	int child_pid, child_status, n, j;
 
 	n = parse_cmd(line_buffer, argv);
 
 	child_pid = fork();
+	if (child_pid == -1)
+		return (-1);
+
 	if (child_pid == 0)
 	{
-		if (execve(argv[0], argv, NULL))
+		printf("%s\n", argv[0]);
+		printf("%p   %d\n", argv[1], n);
+		if (execve(argv[0], argv, NULL) == -1)
 			return (-1);
 	}
 	else

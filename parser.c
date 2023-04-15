@@ -15,11 +15,11 @@ int parse_cmd(char *cmd, char **argv)
 
 	while (cmd[i] != '\0')
 	{
-		while (cmd[i] == ' ')
+		while (cmd[i] == ' ' || cmd[i] == '\n')
 			i++;
 
 		len = 0;
-		while ((c = cmd[i]) != '\0' && c != ' ')
+		while ((c = cmd[i]) != '\0' && c != ' ' && c != '\n')
 		{
 			arg[len] = c;
 			i++;

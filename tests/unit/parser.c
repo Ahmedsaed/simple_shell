@@ -21,7 +21,7 @@ int main()
         printf("Test Case %d:\n", i);
         printf("Actual command: %s\n", cmd[i]);
         printf("Parsed command: ");
-        for (int j = 0; j < argc; j++)
+        for (int j = 0; argv[j] != NULL; j++)
             printf("%s ", argv[j]);
         printf("\n");
 

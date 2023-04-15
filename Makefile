@@ -7,7 +7,7 @@ TMP_DIR := .tmp
 MAKEFLAGS += -k
 
 CC := gcc
-CFlags := -Wall -Werror -Wextra -pedantic -std=gnu89
+# CFlags := -Wall -Werror -Wextra -pedantic -std=gnu89
 
 SOURCE_FILES = $(wildcard *.c)
 HEADER_FILES = $(wildcard *.h)
@@ -20,6 +20,9 @@ build: setup_dirs
 	@printf -- "---- Compiling program ----\n"
 	@${CC} ${CFlags} ${SOURCE_FILES} -o ./$(BUILD_DIR)/${OUT_FILE}.out
 	@printf -- "---- Compiled successfully----\n"
+
+run:
+	@./$(BUILD_DIR)/$(OUT_FILE).out
 
 integration_tests: $(INTEGRATION_TESTS_FILES)
 
