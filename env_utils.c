@@ -5,7 +5,7 @@
  * @var: the name of the environmental variable.
  *
  * Return: Null if environmental variable doesnt exist.
- *		   Otherwise, a pointer to the environmental var.
+ *		   Otherwise, value of environmental variable.
  */
 
 char *_getenv(char *var, char *env[])
@@ -18,7 +18,7 @@ char *_getenv(char *var, char *env[])
 	for(idx = 0; env[idx]; idx++)
 	{
 		if (_strncmp(var, env[idx], len) == 0)
-			return (env[idx]);
+			return (env[idx]+len+1);
 	}
 
 	return (NULL);

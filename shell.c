@@ -13,6 +13,7 @@ int main(int argc, char **argv, char *envp[])
 {
 	size_t line_size = 0;
 	char *line_buffer = NULL;
+	printf("%s\n", _getenv("PATH", envp));
 	(void)argv;
 	(void)argc;
 
