@@ -25,7 +25,10 @@ int main(int argc, char **argv)
 				perror(argv[0]);
 		}
 		else
+		{
+			printf("c-d\n");
 			break;
+		}
 	}
 
 	print_str("\n");
@@ -54,10 +57,9 @@ int run_cmd(char *line_buffer)
 
 	if (child_pid == 0)
 	{
-		printf("%s\n", argv[0]);
-		printf("%p   %d\n", argv[1], n);
 		if (execve(argv[0], argv, NULL) == -1)
 			return (-1);
+		return (-1);
 	}
 	else
 		wait(&child_status);

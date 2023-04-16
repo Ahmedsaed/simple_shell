@@ -18,6 +18,9 @@ int parse_cmd(char *cmd, char **argv)
 		while (cmd[i] == ' ' || cmd[i] == '\n')
 			i++;
 
+		if (cmd[i] == '\0')
+			break;
+
 		len = 0;
 		while ((c = cmd[i]) != '\0' && c != ' ' && c != '\n')
 		{
