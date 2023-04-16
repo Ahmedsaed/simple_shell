@@ -16,6 +16,7 @@ extern char **environ;
 void flush(void);
 void run_cmd(char *line_buffer, char *prog_name);
 int parse_cmd(char *cmd, char **argv);
+char *parse_path(char *cmd);
 
 /* string functions */
 void print_str(char *s);
