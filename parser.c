@@ -45,3 +45,45 @@ int parse_cmd(char *cmd, char **argv)
 	return (argc);
 }
 
+
+/**
+ * parse_path - extracts existing paths holding
+ *				the command
+ *
+ * @cmd: the command
+ *
+ * Returns: pointer to strings of right paths
+ */
+
+char *parse_path(char *cmd)
+{
+	int i = 0, k = 0, j, len;
+	char *value = _getenv(cmd);
+
+	for(len = 0; cmd[len] != '\0'; len++)
+
+	while (value[i] != '\0')
+	{
+		if (value[i] != ':' && value[i] != '\0')
+		{
+			char path[i + len + 1];
+
+			for (j = 0; j < i; j++)
+				path[j] = value[i];
+
+			path[j++] = '/';
+
+			for (; j < len; j++)
+			{
+				path[j] = cmd[k];
+				k += 1;
+			}
+
+			return (path);
+		}
+		else
+			i++;
+	}
+
+	return (cmd);
+}

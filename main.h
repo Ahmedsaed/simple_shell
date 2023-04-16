@@ -11,8 +11,10 @@
 #define UNUSED __attribute__((unused))
 #define MAX_ARGS 100
 
+extern char **environ;
+
 void flush(void);
-void run_cmd(char *line_buffer, char *prog_name, char *env[]);
+void run_cmd(char *line_buffer, char *prog_name);
 int parse_cmd(char *cmd, char **argv);
 
 /* string functions */
@@ -21,6 +23,6 @@ int _strcmp(char *s1, char *s2);
 int _strncmp(char *s1, char *s2, size_t n);
 
 /* environment functions */
-char *_getenv(char *var, char *env[]);
+char *_getenv(char *var);
 
 #endif

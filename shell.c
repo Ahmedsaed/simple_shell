@@ -5,15 +5,15 @@
  *
  * @argc: argument count
  * @argv: argument list
- * @envp: environment variables
+ *
  * Return: 0 on success
  */
 
-int main(int argc, char **argv, char *envp[])
+int main(int argc, char **argv)
 {
 	size_t line_size = 0;
 	char *line_buffer = NULL;
-	printf("%s\n", _getenv("PATH", envp));
+
 	(void)argv;
 	(void)argc;
 
@@ -22,7 +22,7 @@ int main(int argc, char **argv, char *envp[])
 		print_str("$ ");
 		if (getline(&line_buffer, &line_size, stdin) != -1)
 		{
-			run_cmd(line_buffer, argv[0], envp);
+			run_cmd(line_buffer, argv[0]);
 		}
 		else
 			break;
@@ -39,9 +39,10 @@ int main(int argc, char **argv, char *envp[])
  *
  * @line_buffer: the buffer that contains the command and it's arguments
  * @prog_name: string - program name
- * @env: environment variables
+ *
+ * Return: void.
  */
-void run_cmd(char *line_buffer, char *prog_name, char *env[])
+void run_cmd(char *line_buffer, char *prog_name)
 {
 	char *argv[MAX_ARGS + 1];
 	int child_pid, child_status, n, j;
@@ -56,7 +57,7 @@ void run_cmd(char *line_buffer, char *prog_name, char *env[])
 
 		if (child_pid == 0)
 		{
-			if (execve(argv[0], argv, env) == -1)
+			if (execve(argv[0], argv, environ) == -1)
 			{
 				perror(prog_name);
 				for (j = 0; j < n; j++)

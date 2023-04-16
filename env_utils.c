@@ -2,23 +2,24 @@
 
 /**
  * _getenv - Gets an environmental variables.
+ *
  * @var: the name of the environmental variable.
  *
  * Return: Null if environmental variable doesnt exist.
  *		   Otherwise, value of environmental variable.
  */
 
-char *_getenv(char *var, char *env[])
+char *_getenv(char *var)
 {
 	int idx, len;
 
-	for(len = 0; var[len] != '\0'; len++)
+	for (len = 0; var[len] != '\0'; len++)
 		;
 
-	for(idx = 0; env[idx]; idx++)
+	for (idx = 0; environ[idx]; idx++)
 	{
-		if (_strncmp(var, env[idx], len) == 0)
-			return (env[idx]+len+1);
+		if (_strncmp(var, environ[idx], len) == 0)
+			return (environ[idx] + len + 1);
 	}
 
 	return (NULL);
