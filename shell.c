@@ -40,10 +40,8 @@ int main(int argc, char **argv, char *envp[])
  * @line_buffer: the buffer that contains the command and it's arguments
  * @prog_name: string - program name
  * @env: environment variables
- *
- * Return: 0 on success, -1 on failure
  */
-int run_cmd(char *line_buffer, char *prog_name, char *env[])
+void run_cmd(char *line_buffer, char *prog_name, char *env[])
 {
 	char *argv[MAX_ARGS + 1];
 	int child_pid, child_status, n, j;
@@ -52,7 +50,7 @@ int run_cmd(char *line_buffer, char *prog_name, char *env[])
 
 	child_pid = fork();
 	if (child_pid == -1)
-		return (-1);
+		perror(prog_name);
 
 	if (child_pid == 0)
 	{
@@ -61,21 +59,15 @@ int run_cmd(char *line_buffer, char *prog_name, char *env[])
 			perror(prog_name);
 			for (j = 0; j < n; j++)
 				free(argv[j]);
+			free(line_buffer);
 
-			 exit(-1);
+			_exit(-1);
 		}
 	}
-	else
+	else if (child_pid > 0)
 		wait(&child_status);
-
-	if (WIFEXITED(child_status))
-		if (WEXITSTATUS(child_status))
-			return (-1);
 
 	for (j = 0; j < n; j++)
 		free(argv[j]);
-
-	return (0);
 }
-
 
