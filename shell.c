@@ -21,14 +21,10 @@ int main(int argc, char **argv)
 		print_str("$ ");
 		if (getline(&line_buffer, &line_size, stdin) != -1)
 		{
-			if (run_cmd(line_buffer) == -1)
-				perror(argv[0]);
+			run_cmd(line_buffer, argv[0]);
 		}
 		else
-		{
-			printf("c-d\n");
 			break;
-		}
 	}
 
 	print_str("\n");
@@ -41,12 +37,13 @@ int main(int argc, char **argv)
  * run_cmd - runs a command and waits for it to finish
  *
  * @line_buffer: the buffer that contains the command and it's arguments
+ * @prog_name: string - program name
  *
  * Return: 0 on success, -1 on failure
  */
-int run_cmd(char *line_buffer)
+int run_cmd(char *line_buffer, char *prog_name)
 {
-	char *argv[2]; /*  MAX_ARGS + 1*/
+	char *argv[MAX_ARGS + 1];
 	int child_pid, child_status, n, j;
 
 	n = parse_cmd(line_buffer, argv);
@@ -58,11 +55,20 @@ int run_cmd(char *line_buffer)
 	if (child_pid == 0)
 	{
 		if (execve(argv[0], argv, NULL) == -1)
-			return (-1);
-		return (-1);
+		{
+			perror(prog_name);
+			for (j = 0; j < n; j++)
+				free(argv[j]);
+
+			 exit(-1);
+		}
 	}
 	else
 		wait(&child_status);
+
+	if (WIFEXITED(child_status))
+		if (WEXITSTATUS(child_status))
+			return (-1);
 
 	for (j = 0; j < n; j++)
 		free(argv[j]);

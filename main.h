@@ -13,7 +13,7 @@
 
 void print_str(char *s);
 void flush(void);
-int run_cmd(char *line_buffer);
+int run_cmd(char *line_buffer, char *prog_name);
 int parse_cmd(char *cmd, char **argv);
 
 
