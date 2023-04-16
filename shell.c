@@ -13,7 +13,6 @@ int main(int argc, char **argv, char *envp[])
 {
 	size_t line_size = 0;
 	char *line_buffer = NULL;
-
 	(void)argv;
 	(void)argc;
 
