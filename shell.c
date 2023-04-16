@@ -48,24 +48,27 @@ void run_cmd(char *line_buffer, char *prog_name, char *env[])
 
 	n = parse_cmd(line_buffer, argv);
 
-	child_pid = fork();
-	if (child_pid == -1)
-		perror(prog_name);
-
-	if (child_pid == 0)
+	if (n != 0)
 	{
-		if (execve(argv[0], argv, env) == -1)
-		{
+		child_pid = fork();
+		if (child_pid == -1)
 			perror(prog_name);
-			for (j = 0; j < n; j++)
-				free(argv[j]);
-			free(line_buffer);
 
-			_exit(-1);
+		if (child_pid == 0)
+		{
+			if (execve(argv[0], argv, env) == -1)
+			{
+				perror(prog_name);
+				for (j = 0; j < n; j++)
+					free(argv[j]);
+				free(line_buffer);
+
+				_exit(-1);
+			}
 		}
+		else if (child_pid > 0)
+			wait(&child_status);
 	}
-	else if (child_pid > 0)
-		wait(&child_status);
 
 	for (j = 0; j < n; j++)
 		free(argv[j]);

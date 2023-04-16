@@ -27,7 +27,7 @@ run:
 integration_tests: $(INTEGRATION_TESTS_FILES)
 
 $(INTEGRATION_TESTS_FILES): %: $(TEST_DIR)/integration/%.i $(TEST_DIR)/integration/%.o 
-	@./$(BUILD_DIR)/$(OUT_FILE).out < $< | diff -c $(word 2, $?) - >${TMP_DIR}/$@.diff && \
+	@./$(BUILD_DIR)/$(OUT_FILE).out < $< 2>&1 | diff -c $(word 2, $?) - >${TMP_DIR}/$@.diff && \
 	(echo "test $@ succeeded" && exit 0) || \
 	(echo "test $@ failed" && cat ${TMP_DIR}/$@.diff && exit 1)
 
