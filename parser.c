@@ -10,34 +10,41 @@
  */
 int parse_cmd(char *cmd, char **argv)
 {
-	int argc = 0, i = 0, len = 0, j = 0;
-	char c, arg[MAX_ARGS + 1];
+	int argc = 0, i = 0, len = 0;
+	char c, arg[MAX_ARGS + 1], quote = '\0';
 
-	while (cmd[i] != '\0')
+	for (i = 0; (c = cmd[i]) != '\0'; i++)
 	{
-		while (cmd[i] == ' ' || cmd[i] == '\n')
-			i++;
-
-		if (cmd[i] == '\0')
-			break;
-
-		len = 0;
-		while ((c = cmd[i]) != '\0' && c != ' ' && c != '\n')
+		if (c == '\'' || c == '\"')
 		{
-			arg[len] = c;
-			i++;
-			len++;
+			if (!quote)
+				quote = c;
+			else if (quote == c)
+				quote = '\0';
 		}
+		else if ((c == ' ' || c == '\n') && !quote)
+		{
+			if (len)
+			{
+				arg[len] = '\0';
+				argv[argc++] = _strdup(arg);
+				len = 0;
+			}
+		}
+		else
+		{
+			if (len >= MAX_ARGS)
+				return (-1);
+			if (c == '\\' && (cmd[i + 1] == '\"' || cmd[i + 1] == '\''))
+				c = cmd[++i];
+			arg[len++] = c;
+		}
+	}
+
+	if (len)
+	{
 		arg[len] = '\0';
-
-		argv[argc] = malloc(len + 1);
-		if (argv[argc] == NULL)
-			return (-1);
-
-		for (j = 0; j < len + 1; j++)
-			argv[argc][j] = arg[j];
-
-		argc++;
+		argv[argc++] = _strdup(arg);
 	}
 
 	argv[argc] = NULL;

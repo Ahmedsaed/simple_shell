@@ -22,6 +22,7 @@ char *parse_path(char *cmd);
 void print_str(char *s);
 int _strcmp(char *s1, char *s2);
 int _strncmp(char *s1, char *s2, size_t n);
+char *_strdup(char *s);
 
 /* environment functions */
 char *_getenv(char *var);

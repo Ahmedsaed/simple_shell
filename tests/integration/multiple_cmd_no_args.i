@@ -1,3 +1,1 @@
 ls
-/bin/ls
-printenv
