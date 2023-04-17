@@ -95,3 +95,35 @@ char *_strdup(char *s)
 
 	return (copy);
 }
+
+/**
+ * _strncpy - copies from destination to source
+ *				until n characters.
+ *
+ * @dest: destination
+ * @src: source
+ * @n: number of characters to copy to
+ *
+ * Return: destination if exists, otherwise null.
+ */
+
+char *_strncpy(char *dest, char *src, size_t n)
+{
+	char *ptr;
+
+	if (dest == NULL)
+		return (NULL);
+
+	ptr = dest;
+
+	while (*src && n--)
+	{
+		*dest = *src;
+		dest++;
+		src++;
+	}
+
+	*dest = '\0';
+
+	return (ptr);
+}

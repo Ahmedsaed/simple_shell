@@ -91,19 +91,16 @@ char *parse_path(char *cmd)
 			path[j] = cmd[m];
 
 		path[j] = '\0';
-		
+
 		if (stat(path, &st) == 0)
-		{
 			return (path);
-		}
-		else
-			free(path);
+		free(path);
 
 		if (value[i] == '\0')
 			break;
 
 		k = ++i;
 	}
-	
+
 	return (cmd);
 }
