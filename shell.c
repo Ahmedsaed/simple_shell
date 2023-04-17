@@ -14,8 +14,7 @@ int main(int argc, char **argv)
 	size_t line_size = 0;
 	char *line_buffer = NULL;
 
-	printf("%s\n", _getenv("PATH"));
-	printf("%s", parse_path("lasds"));
+	parse_path("lasds");
 
 	(void)argv;
 	(void)argc;

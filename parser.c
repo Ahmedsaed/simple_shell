@@ -76,7 +76,7 @@ char *parse_path(char *cmd)
 
 	while (value[i] != '\0')
 	{
-		while (value[i] != ':')
+		while (value[i] != ':' && value[i] != '\0')
 			i++;
 
 		path = malloc(i - k + len + 2);
@@ -91,13 +91,9 @@ char *parse_path(char *cmd)
 			path[j] = cmd[m];
 
 		path[j] = '\0';
-		printf("k:%d - i:%d - %s\n", k, i, path);
 		
 		if (stat(path, &st) == 0)
 		{
-			printf("found\n");
-			/* free(value); */
-			printf("found\n");
 			return (path);
 		}
 		else
@@ -109,6 +105,5 @@ char *parse_path(char *cmd)
 		k = ++i;
 	}
 	
-	free(value);
 	return (cmd);
 }
