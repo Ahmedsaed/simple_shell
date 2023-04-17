@@ -4,7 +4,7 @@ SRC_DIR := .
 INCLUDE_DIR := include
 TEST_DIR := tests
 TMP_DIR := .tmp
-MAKEFLAGS += -k
+MAKEFLAGS += -k -s
 
 CC := gcc
 CFlags := -Wall -Werror -Wextra -pedantic -std=gnu89

@@ -6,6 +6,7 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <sys/stat.h>
 
 #define BUFFER_SIZE 1024
 #define UNUSED __attribute__((unused))

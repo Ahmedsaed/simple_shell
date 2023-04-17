@@ -64,34 +64,51 @@ int parse_cmd(char *cmd, char **argv)
 
 char *parse_path(char *cmd)
 {
-	int i = 0, k = 0, j, len;
-	char *value = _getenv(cmd), *path;
+	int i = 0, k = 0, j, m, len;
+	char *value = _getenv("PATH"), *path;
+	struct stat st;
+
+	if (value == NULL)
+		return (cmd);
 
 	for (len = 0; cmd[len] != '\0'; len++)
 		;
 
 	while (value[i] != '\0')
 	{
-		if (value[i] != ':' && value[i] != '\0')
+		while (value[i] != ':')
+			i++;
+
+		path = malloc(i - k + len + 2);
+
+		for (j = 0; j < i - k; j++)
+			path[j] = value[j + k];
+
+
+		path[j++] = '/';
+
+		for (m = 0; j < i - k + len + 1; j++, m++)
+			path[j] = cmd[m];
+
+		path[j] = '\0';
+		printf("k:%d - i:%d - %s\n", k, i, path);
+		
+		if (stat(path, &st) == 0)
 		{
-			path = malloc(i + len + 1);
-
-			for (j = 0; j < i; j++)
-				path[j] = value[j];
-
-			path[j++] = '/';
-
-			for (; j < len + 1; j++)
-			{
-				path[j] = cmd[k];
-				k += 1;
-			}
-
+			printf("found\n");
+			/* free(value); */
+			printf("found\n");
 			return (path);
 		}
 		else
-			i++;
-	}
+			free(path);
 
+		if (value[i] == '\0')
+			break;
+
+		k = ++i;
+	}
+	
+	free(value);
 	return (cmd);
 }
