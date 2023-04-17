@@ -21,8 +21,11 @@ char *parse_path(char *cmd);
 
 /* string functions */
 void print_str(char *s);
+int _strlen(char *s);
 int _strcmp(char *s1, char *s2);
 int _strncmp(char *s1, char *s2, size_t n);
+char *_strncpy(char *dest, char *src, size_t n);
+char *_strcat(char *dest, char *src);
 char *_strdup(char *s);
 
 /* environment functions */

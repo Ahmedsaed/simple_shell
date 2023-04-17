@@ -92,7 +92,7 @@ char *parse_path(char *cmd)
 
 		path[j] = '\0';
 		printf("k:%d - i:%d - %s\n", k, i, path);
-		
+
 		if (stat(path, &st) == 0)
 		{
 			printf("found\n");
@@ -108,7 +108,7 @@ char *parse_path(char *cmd)
 
 		k = ++i;
 	}
-	
+
 	free(value);
 	return (cmd);
 }
