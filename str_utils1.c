@@ -97,7 +97,7 @@ char *_strdup(char *s)
 }
 
 /**
- * _strncpy - copies from destination to source
+ * _strncpy - copies from source to destination
  *				until n characters.
  *
  * @dest: destination
@@ -117,13 +117,9 @@ char *_strncpy(char *dest, char *src, size_t n)
 	ptr = dest;
 
 	while (*src && n--)
-	{
-		*dest = *src;
-		dest++;
-		src++;
-	}
+		*ptr++ = *src++;
 
-	*dest = '\0';
+	*ptr = '\0';
 
-	return (ptr);
+	return (dest);
 }

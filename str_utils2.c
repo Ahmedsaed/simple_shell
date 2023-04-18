@@ -7,7 +7,7 @@
  * Return: length of string
  */
 
-int _strlen(char *s)
+size_t _strlen(char *s)
 {
 	int count;
 
@@ -28,17 +28,15 @@ int _strlen(char *s)
 
 char *_strcat(char *dest, char *src)
 {
-	char *ptr = dest + _strlen(dest);
+	char *ptr;
 
 	if (dest == NULL)
 		return (NULL);
 
+	ptr = dest + _strlen(dest);
+
 	while (*src != '\0')
-	{
-		*ptr = *src;
-		ptr++;
-		src++;
-	}
+		*ptr++ = *src++;
 
 	*ptr = '\0';
 
