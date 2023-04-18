@@ -12,7 +12,7 @@ int main()
 	    {"cmd     s tt  w\n", "cmd s tt w"},
 	    {"ls -l /tmp\n", "ls -l /tmp"},
     };
-    char *argv[MAX_ARGS + 1];
+    char *argv[MAX_ARGS_COUNT];
 
     for (i = 0; i < NC; i++)
     {

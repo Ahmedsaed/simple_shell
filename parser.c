@@ -11,7 +11,7 @@
 int parse_cmd(char *cmd, char **argv)
 {
 	int argc = 0, i = 0, len = 0;
-	char c, arg[MAX_ARGS + 1], quote = '\0';
+	char c, arg[MAX_ARG_LEN], quote = '\0';
 
 	for (i = 0; (c = cmd[i]) != '\0'; i++)
 	{
@@ -33,7 +33,7 @@ int parse_cmd(char *cmd, char **argv)
 		}
 		else
 		{
-			if (len >= MAX_ARGS)
+			if (len >= MAX_ARG_LEN)
 				return (-1);
 			if (c == '\\' && (cmd[i + 1] == '\"' || cmd[i + 1] == '\''))
 				c = cmd[++i];
@@ -61,7 +61,6 @@ int parse_cmd(char *cmd, char **argv)
  *
  * Return: pointer to strings of right paths
  */
-
 char *parse_path(char *cmd)
 {
 	int i = 0, k = 0, j, m, len;
@@ -102,5 +101,5 @@ char *parse_path(char *cmd)
 		k = ++i;
 	}
 
-	return (cmd);
+	return (_strdup(cmd));
 }

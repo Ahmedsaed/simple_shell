@@ -81,6 +81,9 @@ char *_strdup(char *s)
 	char *copy = NULL;
 	size_t len = 0, i;
 
+	if (s == NULL)
+		return (NULL);
+
 	while (s[len] != '\0')
 		len++;
 	len++;
@@ -90,7 +93,7 @@ char *_strdup(char *s)
 	if (copy != NULL)
 	{
 		for (i = 0; i < len; i++)
-		copy[i] = s[i];
+			copy[i] = s[i];
 	}
 
 	return (copy);

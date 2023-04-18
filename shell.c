@@ -14,8 +14,6 @@ int main(int argc, char **argv)
 	size_t line_size = 0;
 	char *line_buffer = NULL;
 
-	parse_path("lasds");
-
 	(void)argv;
 	(void)argc;
 
@@ -30,8 +28,8 @@ int main(int argc, char **argv)
 			break;
 	}
 
-	print_str("\n");
 	free(line_buffer);
+	print_str("\n");
 	return (0);
 }
 
@@ -46,10 +44,13 @@ int main(int argc, char **argv)
  */
 void run_cmd(char *line_buffer, char *prog_name)
 {
-	char *argv[MAX_ARGS + 1];
+	char *argv[MAX_ARGS_COUNT + 1], *argv_0;
 	int child_pid, child_status, n, j;
 
 	n = parse_cmd(line_buffer, argv);
+	argv_0 = argv[0];
+	argv[0] = parse_path(argv[0]);
+	free(argv_0);
 
 	if (n != 0)
 	{
@@ -66,7 +67,7 @@ void run_cmd(char *line_buffer, char *prog_name)
 					free(argv[j]);
 				free(line_buffer);
 
-				_exit(-1);
+				_exit(1);
 			}
 		}
 		else if (child_pid > 0)

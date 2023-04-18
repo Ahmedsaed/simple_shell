@@ -11,7 +11,7 @@ CFlags := -Wall -Werror -Wextra -pedantic -std=gnu89
 
 SOURCE_FILES = $(wildcard *.c)
 HEADER_FILES = $(wildcard *.h)
-INTEGRATION_TESTS_FILES = $(patsubst $(TEST_DIR)/integration/%.i,%,$(wildcard $(TEST_DIR)/integration/*.i))
+INTEGRATION_TESTS_FILES = $(patsubst $(TEST_DIR)/integration/%.py,%,$(wildcard $(TEST_DIR)/integration/*.py))
 UNIT_TEST_FILES = $(patsubst %.c, %, $(notdir $(wildcard $(TEST_DIR)/unit/*.c)))
 
 all: clear_screen check_style build run_tests check_memory
@@ -24,10 +24,8 @@ run:
 
 integration_tests: $(INTEGRATION_TESTS_FILES)
 
-$(INTEGRATION_TESTS_FILES): %: $(TEST_DIR)/integration/%.i $(TEST_DIR)/integration/%.o 
-	@./$(BUILD_DIR)/$(OUT_FILE).out < $< 2>&1 | diff -c $(word 2, $?) - >${TMP_DIR}/$@.diff && \
-	(echo "test $@ succeeded" && exit 0) || \
-	(echo "test $@ failed" && cat ${TMP_DIR}/$@.diff && exit 1)
+$(INTEGRATION_TESTS_FILES): %: $(TEST_DIR)/integration/%.py
+	@python $< 
 
 unit_tests:
 	@$(MAKE) announce MESSAGE="Running unit tests"
@@ -51,9 +49,9 @@ clean:
 	rm -rf ./${TMP_DIR}
 
 announce:
-	@echo "----------------------------------------"
+	@echo "------------------------------------------"
 	@printf "|%*s%s%*s|\n" $$(expr 20 - $${#MESSAGE} / 2) "" "$(MESSAGE)" $$(expr 20 - $$(($${#MESSAGE} + 1)) / 2) ""
-	@echo "----------------------------------------"
+	@echo "------------------------------------------"
 
 setup_dirs:
 	@mkdir -p ./$(BUILD_DIR)
@@ -66,12 +64,10 @@ check_style:
 
 check_memory:
 	@$(MAKE) announce MESSAGE="Checking memory leaks"
-	@for file in $(INTEGRATION_TESTS_FILES); do \
-		(valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --error-exitcode=1 \
-		./${BUILD_DIR}/${OUT_FILE}.out < $(TEST_DIR)/integration/$$file.i >>${TMP_DIR}/$$file.vg 2>&1)  && \
-		(echo "No memory leaks in test $$file" && exit 0) || \
-		(echo "Error: memory leak in test $$file" && cat ${TMP_DIR}/$$file.vg && exit 1) \
-	done
+	(valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --error-exitcode=1 \
+	./${BUILD_DIR}/${OUT_FILE}.out < $(TEST_DIR)/sample_input.txt >>${TMP_DIR}/$$file.vg 2>&1)  && \
+	(make announce MESSAGE="No memory leaks found" && exit 0) || \
+	(echo "Error: memory leak found" && cat ${TMP_DIR}/$$file.vg && exit 1) \
 
 clear_screen:
 	clear

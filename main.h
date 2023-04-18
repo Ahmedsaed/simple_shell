@@ -10,7 +10,8 @@
 
 #define BUFFER_SIZE 1024
 #define UNUSED __attribute__((unused))
-#define MAX_ARGS 100
+#define MAX_ARGS_COUNT 100
+#define MAX_ARG_LEN 100
 
 extern char **environ;
 
