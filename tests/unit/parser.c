@@ -16,7 +16,7 @@ int main()
 
     for (i = 0; i < NC; i++)
     {
-        argc = parse_cmd(cmd[i][0], argv);
+		argc = parse_cmd(cmd[i][0], argv);
 
 		s = malloc(sizeof(char) * strlen(cmd[i][1]) * 2);
 		s[0] = '\0';

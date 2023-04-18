@@ -27,6 +27,9 @@ char *_getenv(char *var)
 {
 	int idx, len;
 
+	if (var == NULL)
+		return (NULL);
+
 	for (len = 0; var[len] != '\0'; len++)
 		;
 
