@@ -1,20 +1,6 @@
 #include "main.h"
 
 /**
- * _env - Outputs all environmental variables.
- *
- * Return: nothing.
- */
-
-void _env(void)
-{
-	int idx;
-
-	for (idx = 0; environ[idx]; idx++)
-		printf("%s\n", environ[idx]);
-}
-
-/**
  * _getenv - Gets an environmental variable.
  *
  * @var: the name of the environmental variable.

@@ -15,10 +15,17 @@
 
 extern char **environ;
 
-void flush(void);
+/* Shell functions */
 void run_cmd(char *line_buffer, char *prog_name);
+void run_sys_cmd(char *prog_name, char **argv, int n);
+
+/* Parsers */
 int parse_cmd(char *cmd, char **argv);
 char *parse_path(char *cmd);
+
+/* Built-in shell functions */
+void exit_shell(char *line_buffer, char **argv);
+void _env(void);
 
 /* string functions */
 void print_str(char *s);
@@ -32,7 +39,6 @@ char *_strcat(char *dest, char *src);
 char *_strdup(char *s);
 
 /* environment functions */
-void _env(void);
 char *_getenv(char *var);
 int _setenv(char *name, char *value,
 							    int overwrite);
