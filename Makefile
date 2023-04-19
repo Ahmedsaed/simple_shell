@@ -4,7 +4,7 @@ SRC_DIR := .
 INCLUDE_DIR := include
 TEST_DIR := tests
 TMP_DIR := .tmp
-MAKEFLAGS += -k -s
+MAKEFLAGS += -s
 
 CC := gcc
 CFlags := -Wall -Werror -Wextra -pedantic -std=gnu89 -ggdb3
@@ -28,7 +28,6 @@ $(INTEGRATION_TESTS_FILES): %: $(TEST_DIR)/integration/%.py
 	@python $< 
 
 unit_tests:
-	@$(MAKE) announce MESSAGE="Running unit tests"
 	@for file in $(UNIT_TEST_FILES); do \
 		$(CC) $(filter-out shell.c, $(SOURCE_FILES)) $(TEST_DIR)/unit/$$file.c -o $(TMP_DIR)/tmp.o; \
 		if ./$(TMP_DIR)/tmp.o 2>&1 >/dev/null; then \
@@ -39,9 +38,12 @@ unit_tests:
 		./$(TMP_DIR)/tmp.o; \
 		rm -f ./$(TMP_DIR)/tmp.o; \
 	done
-	@$(MAKE) announce MESSAGE="Running integration tests"
 
-run_tests: setup_dirs unit_tests integration_tests
+run_tests: setup_dirs 
+	@$(MAKE) announce MESSAGE="Running unit tests"
+	@$(MAKE) -k unit_tests
+	@$(MAKE) announce MESSAGE="Running integration tests"
+	@$(MAKE) -k integration_tests
 	@$(MAKE) announce MESSAGE="Success, all tests passed."
 
 clean:
