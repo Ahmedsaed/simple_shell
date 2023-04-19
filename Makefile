@@ -44,7 +44,6 @@ run_tests: setup_dirs
 	@$(MAKE) -k unit_tests
 	@$(MAKE) announce MESSAGE="Running integration tests"
 	@$(MAKE) -k integration_tests
-	@$(MAKE) announce MESSAGE="Success, all tests passed."
 
 clean:
 	rm ./${BUILD_DIR}/*.out

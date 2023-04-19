@@ -1,7 +1,7 @@
 #include "main.h"
 
 /**
- * exit_shell - clears all allocated memory, prints exit meassage and
+ * exit_shell - clears all allocated memory and
  * exits the shell
  *
  * @line_buffer: the buffer that contains the command and it's arguments
@@ -14,7 +14,6 @@ void exit_shell(char *line_buffer, char **argv)
 	for (j = 0; argv[j] != NULL; j++)
 		free(argv[j]);
 	free(line_buffer);
-	print_str("exit\n");
 	exit(0);
 }
 

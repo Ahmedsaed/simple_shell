@@ -23,10 +23,7 @@ int main(int argc, char **argv)
 		if (getline(&line_buffer, &line_size, stdin) != -1)
 			run_cmd(line_buffer, argv[0]);
 		else
-		{
-			print_str("\nexit");
 			break;
-		}
 	}
 
 	free(line_buffer);
