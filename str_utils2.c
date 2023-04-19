@@ -72,3 +72,27 @@ char *_strdup(char *s)
 	return (copy);
 }
 
+/**
+ * _strchr - finds first instance of a char
+ *				in a string.
+ *
+ * @str: the string to search in.
+ * @ch: the character to search for.
+ *
+ * Return: If found, return a pointer value,
+ *				If not, return NULL.
+ */
+
+char *_strchr(char *str, int ch)
+{
+	int i;
+
+	for (i = 0; str[i] != '\0'; i++)
+	{
+		if (ch == str[i])
+			return (&str[i]);
+	}
+
+	return (NULL);
+}
+

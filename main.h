@@ -25,6 +25,7 @@ void print_str(char *s);
 size_t _strlen(char *s);
 int _strcmp(char *s1, char *s2);
 int _strncmp(char *s1, char *s2, size_t n);
+char *_strchr(char *str, int ch);
 char *_strcpy(char *dest, char *src);
 char *_strncpy(char *dest, char *src, size_t n);
 char *_strcat(char *dest, char *src);
@@ -33,5 +34,8 @@ char *_strdup(char *s);
 /* environment functions */
 void _env(void);
 char *_getenv(char *var);
+int _setenv(char *name, char *value,
+							    int overwrite);
+
 
 #endif
