@@ -30,8 +30,7 @@ char *_getenv(char *var)
 	if (var == NULL)
 		return (NULL);
 
-	for (len = 0; var[len] != '\0'; len++)
-		;
+	len = _strlen(var);
 
 	for (idx = 0; environ[idx]; idx++)
 	{

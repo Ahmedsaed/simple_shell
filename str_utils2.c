@@ -50,6 +50,7 @@ char *_strcat(char *dest, char *src)
  *
  * Return: pointer to new copy
  */
+
 char *_strdup(char *s)
 {
 	char *copy = NULL;
@@ -58,9 +59,7 @@ char *_strdup(char *s)
 	if (s == NULL)
 		return (NULL);
 
-	while (s[len] != '\0')
-		len++;
-	len++;
+	len = _strlen(s) + 1;
 
 	copy = malloc(len * sizeof(char));
 

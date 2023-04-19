@@ -70,8 +70,7 @@ char *parse_path(char *cmd)
 	if (value == NULL)
 		return (cmd);
 
-	for (len = 0; cmd[len] != '\0'; len++)
-		;
+	len = _strlen(cmd);
 
 	while (value[i] != '\0')
 	{

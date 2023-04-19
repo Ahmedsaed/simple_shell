@@ -10,8 +10,7 @@ void print_str(char *s)
 {
 	int i;
 
-	for (i = 0; s[i] != '\0'; i++)
-		;
+	i = _strlen(s);
 
 	write(STDOUT_FILENO, s, i);
 }
