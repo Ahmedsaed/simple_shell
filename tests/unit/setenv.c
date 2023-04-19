@@ -4,6 +4,10 @@
 #define NTC 2
 
 /**
+ * INCOMPLETE
+ */
+
+/**
  * The original setenv doesn't accept NULLs,
  * which causes segmentation faults,
  * that's why NULL test-cases where avoided,
@@ -21,6 +25,8 @@
  * set NTC to 3.
  * At anytime you wish to test case number 4&5,
  * set NTC to 5 & comment lib_rv.
+ *
+ *
  */
 
 int main()
@@ -36,8 +42,8 @@ int main()
 
     for (i = 0; i < NTC; i++)
     {
-		my_rv = _setenv(tc[i][0], tc[i][1], 0);
-		lib_rv = setenv(tc[i][0], tc[i][1], 0);
+		my_rv = _setenv(tc[i][0], tc[i][1]);
+		lib_rv = setenv(tc[i][0], tc[i][1]);
 
 		if (my_rv == lib_rv)
 			continue;
