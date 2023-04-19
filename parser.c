@@ -63,8 +63,8 @@ int parse_cmd(char *cmd, char **argv)
  */
 char *parse_path(char *cmd)
 {
-	int i = 0, k = 0, j, m, len;
-	char *value = _getenv("PATH"), *path;
+	int i = 0, k = 0, j, len;
+	char *value = _getenv("PATH"), *path = malloc(1);
 	struct stat st;
 
 	if (value == NULL)
@@ -77,22 +77,14 @@ char *parse_path(char *cmd)
 		while (value[i] != ':' && value[i] != '\0')
 			i++;
 
-		path = malloc(i - k + len + 2);
+		path = realloc(path, i - k + len + 2);
 
-		for (j = 0; j < i - k; j++)
-			path[j] = value[j + k];
-
-
+		_strncpy(path, value + k, (j = i - k));
 		path[j++] = '/';
-
-		for (m = 0; j < i - k + len + 1; j++, m++)
-			path[j] = cmd[m];
-
-		path[j] = '\0';
+		_strncpy(path + j, cmd, i - k + len + 2);
 
 		if (stat(path, &st) == 0)
 			return (path);
-		free(path);
 
 		if (value[i] == '\0')
 			break;
@@ -100,5 +92,6 @@ char *parse_path(char *cmd)
 		k = ++i;
 	}
 
+	free(path);
 	return (_strdup(cmd));
 }
