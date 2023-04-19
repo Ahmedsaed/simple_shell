@@ -34,8 +34,8 @@ char *_strdup(char *s);
 /* environment functions */
 void _env(void);
 char *_getenv(char *var);
-int _setenv(char *name, char *value,
-							    int overwrite);
+int _setenv(char *name, char *value);
+int _unsetenv(char *name);
 
 
 #endif

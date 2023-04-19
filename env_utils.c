@@ -42,6 +42,7 @@ char *_getenv(char *var)
 }
 
 /**
+ * INCOMPLETE
  * _setenv - sets an environmental variable,
  *			if exists, check if it is to be overwritten
  *			then overwrite it, otherwise dont overwrite.
@@ -54,12 +55,12 @@ char *_getenv(char *var)
  * Return: 0 if successful, -1 if not.
  *
  * note: if envname refers to a string with "=",
- *								setenv must fail.
+ *						   setenv must fail.
  *		 if name is empty, setenv must fail.
  * if setenv fails, must print EINVAL from <errno.h>.
  */
 
-int _setenv(char *name, char *value, int overwrite)
+int _setenv(char *name, char *value)
 {
 	char *ev;
 
@@ -70,8 +71,7 @@ int _setenv(char *name, char *value, int overwrite)
 		return (-1);
 	}
 
-	if (_getenv(name) != NULL && overwrite == 0)
-		return (0);
+	_unsetenv(name);
 
 	ev = malloc(_strlen(name) + _strlen(value + 2));
 
@@ -84,3 +84,54 @@ int _setenv(char *name, char *value, int overwrite)
 
 	return (0);
 }
+
+/**
+ * INCOMPLETE
+ * _unsetenv - unsets an environmental variable
+ *
+ * @name: name of variable to be unset.
+ *
+ * Return: 0 on success, -1 on fail
+ *
+ * note: the algorithm unsets by shifting all
+ *		  successive entries back one element.
+ */
+
+int _unsetenv(char *name)
+{
+	int len;
+	char **ep, **sp;
+
+	if (name == NULL || name[0] != '\0' || _strchr(name, '=') != NULL)
+	{
+		printf("Error: Invalid argument.\n");
+		return (-1);
+	}
+
+	len = _strlen(name);
+
+	for (ep = environ; *ep;)
+	{
+		if (_strncmp(name, *ep, len) == 0 && (*ep)[len] == '=')
+		{
+			for (sp = ep; *sp; sp++)
+				*sp = *(sp + 1);
+		}
+		else
+			ep++;
+	}
+
+	return (0);
+}
+
+/**
+ * INCOMPLETE
+ * makeEnv - copy old env in new env.
+ *      then add to new env, new variable,
+ *      then make environ point at the copy.
+ *
+ * @var: variable to add to environ.
+ *
+ * Return: 
+ *
+ */
