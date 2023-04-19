@@ -7,7 +7,7 @@ TMP_DIR := .tmp
 MAKEFLAGS += -k -s
 
 CC := gcc
-CFlags := -Wall -Werror -Wextra -pedantic -std=gnu89
+CFlags := -Wall -Werror -Wextra -pedantic -std=gnu89 -ggdb3
 
 SOURCE_FILES = $(wildcard *.c)
 HEADER_FILES = $(wildcard *.h)
@@ -60,7 +60,10 @@ setup_dirs:
 
 check_style:
 	@$(MAKE) announce MESSAGE="Checking code style"
-	@betty ${SOURCE_FILES} ${HEADER_FILES}
+	@betty-style --no-summary ${SOURCE_FILES} ${HEADER_FILES}
+	@betty-doc ${SOURCE_FILES} ${HEADER_FILES} > $(TMP_DIR)/betty-doc.txt && \
+		(make announce MESSAGE="No styling issuse found" && exit 0) || \
+		(cat $(TMP_DIR)/betty-doc.txt && exit 1)
 
 check_memory:
 	@$(MAKE) announce MESSAGE="Checking memory leaks"

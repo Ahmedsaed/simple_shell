@@ -11,7 +11,7 @@ shell_input = "\n".join([
 
 # Run your compiled shell executable and capture its output
 shell_output = subprocess.run("./build/shell.out", input=shell_input, capture_output=True, text=True).stdout
-shell_output = shell_output.replace("$ ", "").strip();
+shell_output = shell_output.replace("$ ", "").replace("\nexit", "").strip();
 
 # Run bash and capture its output
 bash_output = subprocess.run("/bin/sh", input=shell_input, capture_output=True, text=True).stdout.strip();
