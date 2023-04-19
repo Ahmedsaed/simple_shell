@@ -1,6 +1,66 @@
 #include "main.h"
 
 /**
+ * setup_env - Makes a copy of the original environment.
+ * Return: 0 if successful, -1 if failed.
+ */
+
+int setup_env(void)
+{
+	int env_cnt, var_cnt, i, j;
+	char **new_environ;
+
+	for (env_cnt = 0; environ[env_cnt] != NULL; env_cnt++)
+		;
+
+	new_environ = malloc(sizeof(char *) * env_cnt);
+
+	if (new_environ == NULL)
+	{
+		free(new_environ);
+		return (-1);
+	}
+
+	for (i = 0; i < env_cnt; i++)
+	{
+		for (var_cnt = 0; environ[i][var_cnt] != '\0'; var_cnt++)
+			;
+
+		new_environ[i] = malloc(sizeof(char) * var_cnt);
+
+		_memcpy(new_environ[i], environ[i], sizeof(char) * var_cnt);
+
+		if (new_environ[i] == NULL)
+		{
+			for (j = 0; new_environ[j] != NULL; j++)
+				free(new_environ[i]);
+			free(new_environ);
+
+			return (-1);
+		}
+	}
+
+	environ = new_environ;
+
+	return (0);
+}
+
+/**
+ * free_env - frees the memory that the environment copy
+ *                                                takes.
+ */
+
+void free_env(void)
+{
+	int i;
+
+	for (i = 0; environ[i] != NULL; i++)
+		free(environ[i]);
+	free(environ);
+}
+
+
+/**
  * _getenv - Gets an environmental variable.
  *
  * @var: the name of the environmental variable.
@@ -28,7 +88,6 @@ char *_getenv(char *var)
 }
 
 /**
- * INCOMPLETE
  * _setenv - sets an environmental variable,
  *			if exists, check if it is to be overwritten
  *			then overwrite it, otherwise dont overwrite.
@@ -36,7 +95,6 @@ char *_getenv(char *var)
  *
  * @name: key
  * @value: value
- * @overwrite: bool to check if you want it overwritten
  *
  * Return: 0 if successful, -1 if not.
  *
@@ -72,7 +130,6 @@ int _setenv(char *name, char *value)
 }
 
 /**
- * INCOMPLETE
  * _unsetenv - unsets an environmental variable
  *
  * @name: name of variable to be unset.
@@ -109,15 +166,3 @@ int _unsetenv(char *name)
 
 	return (0);
 }
-
-/**
- * INCOMPLETE
- * makeEnv - copy old env in new env.
- *      then add to new env, new variable,
- *      then make environ point at the copy.
- *
- * @var: variable to add to environ.
- *
- * Return: 
- *
- */

@@ -43,7 +43,7 @@ int main()
     for (i = 0; i < NTC; i++)
     {
 		my_rv = _setenv(tc[i][0], tc[i][1]);
-		lib_rv = setenv(tc[i][0], tc[i][1]);
+		lib_rv = setenv(tc[i][0], tc[i][1], 0);
 
 		if (my_rv == lib_rv)
 			continue;

@@ -23,10 +23,31 @@ void exit_shell(char *line_buffer, char **argv)
  *
  * Return: nothing.
  */
+
 void _env(void)
 {
 	int idx;
 
 	for (idx = 0; environ[idx]; idx++)
 		printf("%s\n", environ[idx]);
+}
+
+/**
+ * _memcpy - memory copies to another
+ *			location until a certain
+ *              memory block.
+ *
+ * @dest: destination
+ * @src: source
+ * @n: until a certain memory block.
+ */
+
+void _memcpy(void *dest, void *src, size_t n)
+{
+	size_t i;
+	char *cdest = (char *)dest;
+	char *csrc = (char *)src;
+
+	for (i = 0; i < n; i++)
+		cdest[i] = csrc[i];
 }

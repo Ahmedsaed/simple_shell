@@ -26,6 +26,7 @@ char *parse_path(char *cmd);
 /* Built-in shell functions */
 void exit_shell(char *line_buffer, char **argv);
 void _env(void);
+void _memcpy(void *dest, void *src, size_t n);
 
 /* string functions */
 void print_str(char *s);
@@ -39,6 +40,8 @@ char *_strcat(char *dest, char *src);
 char *_strdup(char *s);
 
 /* environment functions */
+int setup_env(void);
+void free_env(void);
 char *_getenv(char *var);
 int _setenv(char *name, char *value);
 int _unsetenv(char *name);
