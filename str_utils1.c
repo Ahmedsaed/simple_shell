@@ -70,33 +70,34 @@ int _strncmp(char *s1, char *s2, size_t n)
 }
 
 /**
- * _strdup - returns a pointer to a copy of a string
+ * _strcpy - copies from source to destination
  *
- * @s: string to be copied
+ * @dest: destination
+ * @src: source
  *
- * Return: pointer to new copy
+ * Return: destination if exists
+ *
+ * note: to avoid segmentation fault or wrong output,
+ *					Size Of Dest + 1 < Size Of Src.
  */
-char *_strdup(char *s)
-{
-	char *copy = NULL;
-	size_t len = 0, i;
 
-	if (s == NULL)
+char *_strcpy(char *dest, char *src)
+{
+	char *ptr;
+
+	if (dest == NULL)
+		return (src);
+	if (src == NULL)
 		return (NULL);
 
-	while (s[len] != '\0')
-		len++;
-	len++;
+	ptr = dest;
 
-	copy = malloc(len * sizeof(char));
+	while (*src)
+		*ptr++ = *src++;
 
-	if (copy != NULL)
-	{
-		for (i = 0; i < len; i++)
-			copy[i] = s[i];
-	}
+	*ptr = '\0';
 
-	return (copy);
+	return (dest);
 }
 
 /**
@@ -108,6 +109,9 @@ char *_strdup(char *s)
  * @n: number of characters to copy to
  *
  * Return: destination if exists, otherwise null.
+ *
+ * note: to avoid segmentation fault or wrong output,
+ *					Size Of Dest + 1 < n.
  */
 
 char *_strncpy(char *dest, char *src, size_t n)
@@ -115,11 +119,13 @@ char *_strncpy(char *dest, char *src, size_t n)
 	char *ptr;
 
 	if (dest == NULL)
+		return (src);
+	if (src == NULL)
 		return (NULL);
 
 	ptr = dest;
 
-	while (*src && n--)
+	while (*src && (n-- != 0))
 		*ptr++ = *src++;
 
 	*ptr = '\0';
