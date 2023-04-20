@@ -13,7 +13,7 @@ int setup_env(void)
 	for (env_cnt = 0; environ[env_cnt] != NULL; env_cnt++)
 		;
 
-	new_environ = malloc(sizeof(char *) * env_cnt);
+	new_environ = malloc(sizeof(char *) * (env_cnt + 1));
 
 	if (new_environ == NULL)
 	{
@@ -26,9 +26,9 @@ int setup_env(void)
 		for (var_cnt = 0; environ[i][var_cnt] != '\0'; var_cnt++)
 			;
 
-		new_environ[i] = malloc(sizeof(char) * var_cnt);
+		new_environ[i] = malloc(sizeof(char) * (var_cnt + 1));
 
-		_memcpy(new_environ[i], environ[i], sizeof(char) * var_cnt);
+		_memcpy(new_environ[i], environ[i], sizeof(char) * (var_cnt + 1));
 
 		if (new_environ[i] == NULL)
 		{
@@ -39,6 +39,8 @@ int setup_env(void)
 			return (-1);
 		}
 	}
+
+	new_environ[i] = NULL;
 
 	environ = new_environ;
 
