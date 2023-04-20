@@ -77,7 +77,7 @@ char *parse_path(char *cmd)
 		while (value[i] != ':' && value[i] != '\0')
 			i++;
 
-		path = realloc(path, i - k + len + 2);
+		path = _realloc(path, sizeof(*path), i - k + len + 2);
 
 		_strncpy(path, value + k, (j = i - k));
 		path[j++] = '/';

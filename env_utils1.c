@@ -108,6 +108,7 @@ char *_getenv(char *var)
 
 int _setenv(char *name, char *value)
 {
+	int len;
 	char *ev;
 
 	if (name == NULL || value == NULL || name[0] == '\0'
@@ -128,6 +129,12 @@ int _setenv(char *name, char *value)
 	_strcat(ev, "=");
 	_strcat(ev, value);
 
+	len = _getenvLen();
+
+	environ = _realloc(environ, len, len + 2);
+
+	environ[len + 1] = ev;
+	environ[len + 2] = NULL;
 	return (0);
 }
 
