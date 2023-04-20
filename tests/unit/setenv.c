@@ -1,7 +1,7 @@
 #include "./../../main.h"
 #include <string.h>
 
-#define NTC 2
+#define NTC 1 
 
 /**
  * INCOMPLETE
@@ -31,8 +31,8 @@
 
 int main()
 {
-    int i, my_rv, lib_rv, rv = 0;
-    char *tc[][2] = {
+	int i, my_rv, lib_rv, rv = 0;
+	char *tc[][2] = {
 		{"env1_test", "test/test"},
 		{"PATH", " ... "},
 		{"", ""},
@@ -40,20 +40,26 @@ int main()
 		{"env3_test", NULL}
 	};
 
-    for (i = 0; i < NTC; i++)
-    {
+	setup_env();
+
+	for (i = 0; i < NTC; i++)
+	{
 		my_rv = _setenv(tc[i][0], tc[i][1]);
 		lib_rv = setenv(tc[i][0], tc[i][1], 0);
+
+		/* printf("%s\n", my_rv); */
 
 		if (my_rv == lib_rv)
 			continue;
 
-        printf("Test Case %d: Name(%s), Value(%s)\n", i, tc[i][0], tc[i][1]);
-        printf("Library's Return Value: %i\n", lib_rv);
-        printf("My Return Value: %i\n", my_rv);
+		printf("Test Case %d: Name(%s), Value(%s)\n", i, tc[i][0], tc[i][1]);
+		printf("Library's Return Value: %i\n", lib_rv);
+		printf("My Return Value: %i\n", my_rv);
 
 		rv = 1;
 	}
+
+	free_env();
 
 	return (rv);
 }

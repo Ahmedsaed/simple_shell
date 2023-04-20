@@ -120,7 +120,7 @@ int _setenv(char *name, char *value)
 
 	_unsetenv(name);
 
-	ev = malloc(_strlen(name) + _strlen(value + 2));
+	ev = malloc(_strlen(name) + _strlen(value) + 2);
 
 	if (ev == NULL)
 		return (-1);
@@ -131,10 +131,10 @@ int _setenv(char *name, char *value)
 
 	len = _getenvLen();
 
-	environ = _realloc(environ, len, len + 2);
+	environ = _realloc(environ, sizeof(char *) * len, sizeof(char *) * (len + 2));
 
-	environ[len + 1] = ev;
-	environ[len + 2] = NULL;
+	environ[len] = ev;
+	environ[len + 1] = NULL;
 	return (0);
 }
 
@@ -154,7 +154,7 @@ int _unsetenv(char *name)
 	int len;
 	char **ep, **sp;
 
-	if (name == NULL || name[0] != '\0' || _strchr(name, '=') != NULL)
+	if (name == NULL || name[0] == '\0' || _strchr(name, '=') != NULL)
 	{
 		printf("Error: Invalid argument.\n");
 		return (-1);
@@ -175,4 +175,5 @@ int _unsetenv(char *name)
 
 	return (0);
 }
+
 
