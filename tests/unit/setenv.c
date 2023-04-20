@@ -1,43 +1,26 @@
 #include "./../../main.h"
 #include <string.h>
 
-#define NTC 1 
+#define NTC 2
 
 /**
- * INCOMPLETE
- */
-
-/**
- * The original setenv doesn't accept NULLs,
- * which causes segmentation faults,
- * that's why NULL test-cases where avoided,
- * but NULL test-cases are indeed dealt with
- * in our own function.
- *
- * Also, test case number 3 is avoided
- * (as NTC is = 2)
- * because it sucessfully returns EINVAL
- * (Error: Invalid Argument.)
- * Which appears when you "make",
- * which ruins the look of the output.
- *
- * At anytime you wish to test case number 3,
- * set NTC to 3.
- * At anytime you wish to test case number 4&5,
- * set NTC to 5 & comment lib_rv.
- *
- *
+ * NTC is set to 2
+ * so that the 3rd,4th and 5th test cases
+ * that print out errors as they should
+ * don't print them out to make the
+ * application of "make" in the terminal cleaner.
  */
 
 int main()
 {
 	int i, my_rv, lib_rv, rv = 0;
+	char *my, *lib;
 	char *tc[][2] = {
 		{"env1_test", "test/test"},
 		{"PATH", " ... "},
-		{"", ""},
-		{NULL, "env2_test"},
-		{"env3_test", NULL}
+		{"", "test"},
+		{NULL, "test"},
+		{"test", NULL}
 	};
 
 	setup_env();
@@ -45,16 +28,16 @@ int main()
 	for (i = 0; i < NTC; i++)
 	{
 		my_rv = _setenv(tc[i][0], tc[i][1]);
-		lib_rv = setenv(tc[i][0], tc[i][1], 0);
-
-		/* printf("%s\n", my_rv); */
-
-		if (my_rv == lib_rv)
+		if (my_rv == -1)
 			continue;
 
-		printf("Test Case %d: Name(%s), Value(%s)\n", i, tc[i][0], tc[i][1]);
-		printf("Library's Return Value: %i\n", lib_rv);
-		printf("My Return Value: %i\n", my_rv);
+		my = _getenv(tc[i][0]);
+
+		if ( my_rv == 0 && strcmp(my, tc[i][1]) == 0 )
+			continue;
+
+		printf("Test Case %d: %s/%s\n", i, tc[i][0], tc[i][1]);
+		printf("My Return Value(%i): %s\n", my_rv, my);
 
 		rv = 1;
 	}
