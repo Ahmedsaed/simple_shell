@@ -31,7 +31,7 @@ void _memcpy(void *dest, void *src, size_t n)
  */
 
 void *_realloc(void *ptr, unsigned int old_size,
-						  unsigned int new_size)
+		unsigned int new_size)
 {
 	int size, i;
 	char *p;

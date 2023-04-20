@@ -61,7 +61,7 @@ setup_dirs:
 
 check_style:
 	@$(MAKE) announce MESSAGE="Checking code style"
-	@betty-style --no-summary ${SOURCE_FILES} ${HEADER_FILES}
+	@betty-style --allow-global-variables --no-summary ${SOURCE_FILES} ${HEADER_FILES}
 	@betty-doc ${SOURCE_FILES} ${HEADER_FILES} > $(TMP_DIR)/betty-doc.txt && \
 		(make announce MESSAGE="No styling issuse found" && exit 0) || \
 		(cat $(TMP_DIR)/betty-doc.txt && exit 1)

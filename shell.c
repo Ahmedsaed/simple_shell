@@ -1,5 +1,7 @@
 #include "main.h"
 
+char *prog_name;
+
 /**
  * main - entry point
  *
@@ -14,6 +16,8 @@ int main(int argc, char **argv)
 	size_t line_size = 0;
 	char *line_buffer = NULL;
 
+	prog_name = argv[0];
+
 	(void)argv;
 	(void)argc;
 
@@ -21,7 +25,7 @@ int main(int argc, char **argv)
 	{
 		print_str("$ ");
 		if (getline(&line_buffer, &line_size, stdin) != -1)
-			run_cmd(line_buffer, argv[0]);
+			run_cmd(line_buffer);
 		else
 			break;
 	}
@@ -36,9 +40,8 @@ int main(int argc, char **argv)
  * calls the relevant function
  *
  * @line_buffer: the buffer that contains the command and it's arguments
- * @prog_name: string - program name
  */
-void run_cmd(char *line_buffer, char *prog_name)
+void run_cmd(char *line_buffer)
 {
 	int n, j;
 	char *argv[MAX_ARGS_COUNT + 1];
@@ -50,7 +53,7 @@ void run_cmd(char *line_buffer, char *prog_name)
 	else if (_strcmp(argv[0], "env") == 0)
 		_env();
 	else if (n != 0)
-		run_sys_cmd(prog_name, argv, n);
+		run_sys_cmd(argv, n);
 
 	for (j = 0; j < n; j++)
 		free(argv[j]);
@@ -60,13 +63,12 @@ void run_cmd(char *line_buffer, char *prog_name)
 /**
  * run_sys_cmd - runs a command and waits for it to finish
  *
- * @prog_name: string - program name
  * @argv: array of strings storing the command and it's arguments
  * @n: number of arguments in argv
  *
  * Return: void.
  */
-void run_sys_cmd(char *prog_name, char **argv, int n)
+void run_sys_cmd(char **argv, int n)
 {
 	char *argv_0;
 	int child_pid, child_status, j;

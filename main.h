@@ -16,8 +16,8 @@
 extern char **environ;
 
 /* Shell functions */
-void run_cmd(char *line_buffer, char *prog_name);
-void run_sys_cmd(char *prog_name, char **argv, int n);
+void run_cmd(char *line_buffer);
+void run_sys_cmd(char **argv, int n);
 
 /* Parsers */
 int parse_cmd(char *cmd, char **argv);
