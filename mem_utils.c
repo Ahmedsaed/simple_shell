@@ -56,3 +56,26 @@ void *_realloc(void *ptr, unsigned int old_size,
 	free(ptr);
 	return (p);
 }
+
+/**
+ * memchr - returns a pointer to the first occurrence of chr in s
+ *
+ * @s: string to search in
+ * @c: character to find
+ * @n: number of bytes
+ *
+ * Return: pointer to c if found. otherwise, NULL
+ */
+void *_memchr(char *s, char c, int n)
+{
+	char *p = s;
+
+	while (n-- > 0)
+	{
+		if (*p == c)
+			return ((void *)p);
+		p++;
+	}
+
+	return (NULL);
+}

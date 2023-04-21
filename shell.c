@@ -24,7 +24,7 @@ int main(int argc, char **argv)
 	while (1)
 	{
 		print_str("$ ");
-		if (getline(&line_buffer, &line_size, stdin) != -1)
+		if (_getline(&line_buffer, &line_size, STDIN_FILENO) != -1)
 			run_cmd(line_buffer);
 		else
 			break;
