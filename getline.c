@@ -40,7 +40,7 @@ int _getline(char **lineptr, size_t *n, int stream)
 	{
 		if (buffer_ptr < buffer + bytes_read)
 		{
-			char *new_line = getline_memchr(buffer_ptr,
+			char *new_line = _memchr(buffer_ptr,
 					'\n',
 					buffer + bytes_read - buffer_ptr);
 
@@ -50,7 +50,7 @@ int _getline(char **lineptr, size_t *n, int stream)
 
 				if (*lineptr == NULL || *n < line_len_b)
 				{
-					new_buffer = _realloc(*lineptr, *n * sizeof(char), line_len_b * sizeof(char));
+					new_buffer = _realloc(*lineptr, *n, line_len_b);
 					*n = line_len_b;
 					if (new_buffer == NULL)
 						return (-1);
@@ -75,7 +75,7 @@ int _getline(char **lineptr, size_t *n, int stream)
 		}
 
 		r = read(stream, buffer + bytes_read, current_buffer_size - bytes_read);
-		if (r == 0)
+		if (r == 0 && !(buffer_ptr < buffer + bytes_read))
 			return (-1);
 		else if (r < 0)
 		{
@@ -86,28 +86,3 @@ int _getline(char **lineptr, size_t *n, int stream)
 	}
 }
 
-/**
- * getline_memchr - returns a pointer to the first occurrence of chr in s, if c is not found,
- * return a pointer to the character at index n
- *
- * @s: string to search in
- * @c: character to find
- * @n: number of bytes
- *
- * Note: this is a modified version of memchr for getline function
- *
- * Return: pointer to c if found. otherwise, NULL
- */
-void *getline_memchr(char *s, char c, int n)
-{
-	char *p = s;
-
-	while (n-- > 0)
-	{
-		if (*p == c)
-			return ((void *)p);
-		p++;
-	}
-
-	return ((void *)p);
-}

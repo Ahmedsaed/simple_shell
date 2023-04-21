@@ -1,5 +1,4 @@
 ls
 /bin/ls
 echo "hallo world"
-env
 exit

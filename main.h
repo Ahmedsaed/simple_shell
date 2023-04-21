@@ -40,7 +40,6 @@ char *_strdup(char *s);
 
 /* getline functions */
 int _getline(char **lineprt, size_t *n, int stream);
-void *getline_memchr(char *s, char c, int n);
 
 /* environment functions */
 int setup_env(void);
