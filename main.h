@@ -14,6 +14,7 @@
 #define MAX_ARG_LEN 100
 
 extern char **environ;
+extern char *prog_name;
 
 /* Shell functions */
 void run_cmd(char *line_buffer);

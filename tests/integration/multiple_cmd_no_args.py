@@ -5,8 +5,8 @@ import difflib
 # Define the input for the shell
 shell_input = "\n".join([
         "ls",
-        "/bin/ls",
         "echo",
+        "/bin/ls",
     ]) 
 
 # Run your compiled shell executable and capture its output
