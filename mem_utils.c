@@ -58,7 +58,7 @@ void *_realloc(void *ptr, unsigned int old_size,
 }
 
 /**
- * memchr - returns a pointer to the first occurrence of chr in s
+ * _memchr - returns a pointer to the first occurrence of chr in s
  *
  * @s: string to search in
  * @c: character to find

@@ -1,15 +1,25 @@
 #include "main.h"
 
-/* local function headers */
-int update_buffer(char **buffer, char **buffer_ptr, size_t *current_buffer_size, size_t bytes_read);
+/* local helper function headers */
+int update_buffer(char **buffer,
+		char **buffer_ptr,
+		size_t *current_buffer_size,
+		size_t bytes_read);
 int line_len(char delim, char *buffer);
 int alloc_buffer(char **buffer, int old_size, int new_size);
+int update_lineptr(char **lineptr,
+		size_t *n,
+		char delim,
+		char **buffer_ptr,
+		size_t *total_bytes);
+
+char *buffer;
 
 /**
  * _getline - reads characters from stdin into buffer untill it
  * reaches '\n' or EOF characters
  *
- * @line_buffer: the buffer that the function should update each call
+ * @lineptr: the buffer that the function should update each call
  * @n: the size of the line_buffer after update
  * @stream: the that the function should read the characters from
  *
@@ -23,10 +33,10 @@ int alloc_buffer(char **buffer, int old_size, int new_size);
  */
 int _getline(char **lineptr, size_t *n, int stream)
 {
-	static char *buffer, *buffer_ptr;
+	static char *buffer_ptr;
 	static size_t current_buffer_size, bytes_read;
 	size_t total_bytes = 0;
-	int r = -1, line_len_b;
+	int r = -1;
 
 	if (lineptr == NULL || n == NULL)
 		return (-1);
@@ -39,18 +49,10 @@ int _getline(char **lineptr, size_t *n, int stream)
 	{
 		if (buffer_ptr < buffer + bytes_read)
 		{
-			line_len_b = line_len((r == 0) ? '\0' : '\n', buffer_ptr);
-			if (line_len_b != -1)
-			{
-				if (alloc_buffer(lineptr, *n, line_len_b) == -1)
-					return (-1);
-				*n = ((size_t)line_len_b > *n) ? (size_t)line_len_b : *n;
-
-				_strncpy(*lineptr + total_bytes, buffer_ptr, line_len_b);
-				buffer_ptr += line_len_b + 1;
-				total_bytes += line_len_b + 1;
-				return (total_bytes);
-			}
+			if (update_lineptr(lineptr, n,
+						(r == 0) ? '\0' : '\n',
+						&buffer_ptr, &total_bytes) == 0)
+			return (total_bytes);
 		}
 
 		if (buffer + bytes_read == buffer + current_buffer_size)
@@ -59,7 +61,7 @@ int _getline(char **lineptr, size_t *n, int stream)
 
 		r = read(stream, buffer + bytes_read,
 				current_buffer_size - bytes_read);
-		
+
 		if (r == 0 && !(buffer_ptr < buffer + bytes_read))
 			return (-1);
 		else if (r < 0)
@@ -70,6 +72,39 @@ int _getline(char **lineptr, size_t *n, int stream)
 
 		bytes_read += r;
 	}
+}
+
+/**
+ * update_lineptr - helper function for getline that updates
+ * lineptr using buffer
+ *
+ * @lineptr: pointer to the lineptr variable to update it's value
+ * @n: pointer to the variable that stores the size of lineptr
+ * @delim: the delimiter for finding next line
+ * @buffer_ptr: a pointer to a byte in buffer
+ * @total_bytes: total number of bytes returned
+ *
+ * Return: 0 on sucess, -1 on failure
+ */
+int update_lineptr(char **lineptr, size_t *n, char delim,
+		char **buffer_ptr, size_t *total_bytes)
+{
+	int line_len_b;
+
+	line_len_b = line_len(delim, *buffer_ptr);
+	if (line_len_b == -1)
+		return (-1);
+
+	if (alloc_buffer(lineptr, *n, line_len_b) == -1)
+		return (-1);
+
+	*n = ((size_t)line_len_b > *n) ? (size_t)line_len_b : *n;
+
+	_strncpy(*lineptr + *total_bytes, *buffer_ptr, line_len_b);
+	*buffer_ptr += line_len_b + 1;
+	*total_bytes += line_len_b + 1;
+
+	return (0);
 }
 
 /**
@@ -126,16 +161,19 @@ int line_len(char delim, char *buffer)
 }
 
 /**
- * update_buffer - updates buffer size and pointers and allocates more memory
+ * update_buffer - updates buffer size and pointers and
+ * allocates more memory
  *
  * @buffer: pointer to the buffer to update
- * @buffer_ptr: a pointer in getline that should be updated after allocating memory
+ * @buffer_ptr: a pointer in getline that should be
+ * updated after allocating memory
  * @current_buffer_size: the size of the current buffer
  * @bytes_read: a variable from getline that's used to update buffer_ptr
  *
  * Return: 0 on sucess, -1 on failure
  */
-int update_buffer(char **buffer, char **buffer_ptr, size_t *current_buffer_size, size_t bytes_read)
+int update_buffer(char **buffer, char **buffer_ptr,
+		size_t *current_buffer_size, size_t bytes_read)
 {
 	int n;
 
@@ -147,7 +185,9 @@ int update_buffer(char **buffer, char **buffer_ptr, size_t *current_buffer_size,
 	else
 		*current_buffer_size += BUFFER_SIZE;
 
-	n = alloc_buffer(buffer, *current_buffer_size - BUFFER_SIZE, *current_buffer_size);
+	n = alloc_buffer(buffer,
+			*current_buffer_size - BUFFER_SIZE,
+			*current_buffer_size);
 	if (n == -1)
 		return (-1);
 
@@ -156,4 +196,10 @@ int update_buffer(char **buffer, char **buffer_ptr, size_t *current_buffer_size,
 	return (0);
 }
 
-
+/**
+ * free_getline_buffer - frees the allocated memory for getline function
+ */
+void free_getline_buffer(void)
+{
+	free(buffer);
+}
