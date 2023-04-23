@@ -38,6 +38,7 @@ char *_strcpy(char *dest, char *src);
 char *_strncpy(char *dest, char *src, size_t n);
 char *_strcat(char *dest, char *src);
 char *_strdup(char *s);
+int _atoi(char *str);
 
 /* getline functions */
 int _getline(char **lineprt, size_t *n, int stream);

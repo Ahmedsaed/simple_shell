@@ -13,6 +13,7 @@ void exit_shell(char *line_buffer, char **argv)
 
 	for (j = 0; argv[j] != NULL; j++)
 		free(argv[j]);
+	free_env();
 	free(line_buffer);
 	exit(0);
 }

@@ -96,3 +96,21 @@ char *_strchr(char *str, int ch)
 	return (NULL);
 }
 
+/**
+ * _atoi - convert string to integer
+ *
+ * @str: string
+ *
+ * Return: returns integer.
+ *
+ * note: *10 is an indication if digit.
+ */
+int _atoi(char *str)
+{
+	int i, integer = 0;
+
+	for (i = 0; str[i] != '\0'; i++)
+		integer = integer * 10 + str[i] - '0';
+
+	return (integer);
+}
