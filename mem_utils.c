@@ -79,3 +79,23 @@ void *_memchr(char *s, char c, int n)
 
 	return (NULL);
 }
+
+/**
+ * _calloc - allocates memory and initializes it to zeros
+ *
+ * @count: This is the number of elements to be allocated
+ * @size: the size of one element
+ *
+ * Return: pointer to allocated memory block
+ */
+void *_calloc(size_t count, size_t size)
+{
+	size_t i;
+	void *ptr = malloc(count * size);
+
+	if (ptr != NULL)
+		for (i = 0; i < count * size; i++)
+			*((char *)ptr + i) = 0;
+
+	return (ptr);
+}
