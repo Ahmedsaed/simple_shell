@@ -17,6 +17,8 @@ jobs:
       run: |
         sudo apt install valgrind
         git clone https://github.com/holbertonschool/Betty.git
-        sudo ./Betty/install.sh
+    - name: install betty
+      working-directory: ./Betty
+      run: sudo ./Betty/install.sh
     - name: make
       run: make check_style build run_tests check_memory
