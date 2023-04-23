@@ -14,4 +14,4 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: make
-      run: make
+      run: make check_style build run_tests check_memory
