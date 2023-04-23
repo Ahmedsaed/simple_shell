@@ -20,4 +20,4 @@ jobs:
         cd Betty
         sudo ./install.sh
     - name: make
-      run: make check_style build run_tests check_memory
+      run: make setup_dirs check_style build run_tests check_memory
