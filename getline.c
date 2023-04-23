@@ -12,8 +12,10 @@ int update_lineptr(char **lineptr,
 		char delim,
 		char **buffer_ptr,
 		size_t *total_bytes);
-
-char *buffer;
+void free_buffer(char **buffer,
+		UNUSED char **buffer_ptr,
+		UNUSED size_t *current_buffer_size,
+		UNUSED size_t *bytes_read);
 
 /**
  * _getline - reads characters from stdin into buffer untill it
@@ -33,7 +35,7 @@ char *buffer;
  */
 int _getline(char **lineptr, size_t *n, int stream)
 {
-	static char *buffer_ptr;
+	static char *buffer, *buffer_ptr;
 	static size_t current_buffer_size, bytes_read;
 	size_t total_bytes = 0;
 	int r = -1;
@@ -52,7 +54,12 @@ int _getline(char **lineptr, size_t *n, int stream)
 			if (update_lineptr(lineptr, n,
 						(r == 0) ? '\0' : '\n',
 						&buffer_ptr, &total_bytes) == 0)
-			return (total_bytes);
+			{
+				if (buffer_ptr == buffer + bytes_read)
+					free_buffer(&buffer, &buffer_ptr, &current_buffer_size, &bytes_read);
+
+				return (total_bytes);
+			}
 		}
 
 		if (buffer + bytes_read == buffer + current_buffer_size)
@@ -63,7 +70,10 @@ int _getline(char **lineptr, size_t *n, int stream)
 				current_buffer_size - bytes_read);
 
 		if (r == 0 && !(buffer_ptr < buffer + bytes_read))
+		{
+			free_buffer(&buffer, &buffer_ptr, &current_buffer_size, &bytes_read);
 			return (-1);
+		}
 		else if (r < 0)
 		{
 			perror(prog_name);
@@ -95,7 +105,7 @@ int update_lineptr(char **lineptr, size_t *n, char delim,
 	if (line_len_b == -1)
 		return (-1);
 
-	if (alloc_buffer(lineptr, *n, line_len_b) == -1)
+	if (alloc_buffer(lineptr, *n, line_len_b + 1) == -1)
 		return (-1);
 
 	*n = ((size_t)line_len_b > *n) ? (size_t)line_len_b : *n;
@@ -127,7 +137,7 @@ int alloc_buffer(char **buffer, int old_size, int new_size)
 
 	if (*buffer == NULL)
 	{
-		*buffer = malloc(new_size);
+		*buffer = _calloc(new_size, sizeof(char));
 		if (*buffer == NULL)
 			return (-1);
 		return (0);
@@ -196,10 +206,4 @@ int update_buffer(char **buffer, char **buffer_ptr,
 	return (0);
 }
 
-/**
- * free_getline_buffer - frees the allocated memory for getline function
- */
-void free_getline_buffer(void)
-{
-	free(buffer);
-}
+
