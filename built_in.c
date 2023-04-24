@@ -9,13 +9,17 @@
  */
 void exit_shell(char *line_buffer, char **argv)
 {
-	int j;
+	int j, status = 0;
+
+	if (argv[1] != NULL)
+		status = _atoi(argv[1]);
 
 	for (j = 0; argv[j] != NULL; j++)
 		free(argv[j]);
 	free_env();
 	free(line_buffer);
-	exit(0);
+
+	exit(status);
 }
 
 /**
