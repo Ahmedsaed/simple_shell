@@ -1,4 +1,6 @@
 ls
 /bin/ls
 echo "hallo world"
+setenv hallo hmm
+unsetenv hallo
 exit

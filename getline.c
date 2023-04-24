@@ -108,7 +108,8 @@ int update_lineptr(char **lineptr, size_t *n, char delim,
 	if (alloc_buffer(lineptr, *n, line_len_b + 1) == -1)
 		return (-1);
 
-	*n = ((size_t)line_len_b > *n) ? (size_t)line_len_b : *n;
+	/* *n = ((size_t)line_len_b > *n) ? (size_t)line_len_b : *n; */
+	*n = (size_t)line_len_b + 1;
 
 	_strncpy(*lineptr + *total_bytes, *buffer_ptr, line_len_b);
 	*buffer_ptr += line_len_b + 1;

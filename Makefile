@@ -68,7 +68,7 @@ check_style:
 check_memory:
 	@$(MAKE) announce MESSAGE="Checking memory leaks"
 	(valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --error-exitcode=1 \
-	./${BUILD_DIR}/${OUT_FILE}.out < $(TEST_DIR)/sample_input.txt >>${TMP_DIR}/$$file.vg 2>&1)  && \
+	./${BUILD_DIR}/${OUT_FILE}.out < $(TEST_DIR)/sample_input.txt > ${TMP_DIR}/$$file.vg 2>&1)  && \
 	(make announce MESSAGE="No memory leaks found" && exit 0) || \
 	(echo "Error: memory leak found" && cat ${TMP_DIR}/$$file.vg && exit 1) \
 

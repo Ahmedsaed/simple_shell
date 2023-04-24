@@ -117,7 +117,7 @@ int _setenv(char *name, char *value)
 	if (name == NULL || value == NULL || name[0] == '\0'
 			|| _strchr(name, '=') != NULL)
 	{
-		perror(prog_name);
+		 /* perror(prog_name); */
 		return (-1);
 	}
 
@@ -159,7 +159,7 @@ int _unsetenv(char *name)
 
 	if (name == NULL || name[0] == '\0' || _strchr(name, '=') != NULL)
 	{
-		perror(prog_name);
+		 /* perror(prog_name); */
 		return (-1);
 	}
 
@@ -169,6 +169,8 @@ int _unsetenv(char *name)
 	{
 		if (_strncmp(name, *ep, len) == 0 && (*ep)[len] == '=')
 		{
+			sp = ep;
+			free(*sp);
 			for (sp = ep; *sp; sp++)
 				*sp = *(sp + 1);
 		}
