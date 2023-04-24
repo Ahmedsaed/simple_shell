@@ -25,25 +25,24 @@ run:
 integration_tests: $(INTEGRATION_TESTS_FILES)
 
 $(INTEGRATION_TESTS_FILES): %: $(TEST_DIR)/integration/%.py
-	@python $< 
+	@python $<
 
-unit_tests:
-	@for file in $(UNIT_TEST_FILES); do \
-		$(CC) $(filter-out shell.c, $(SOURCE_FILES)) $(TEST_DIR)/unit/$$file.c -o $(TMP_DIR)/tmp.o; \
-		if ./$(TMP_DIR)/tmp.o 2>&1 >/dev/null; then \
-			echo "Test $$file succedded"; \
-		else \
-			echo "Test $$file failed"; \
-		fi; \
-		./$(TMP_DIR)/tmp.o; \
-		rm -f ./$(TMP_DIR)/tmp.o; \
-	done
+unit_tests: $(UNIT_TEST_FILES)
 
-run_tests: setup_dirs 
+$(UNIT_TEST_FILES): %: $(TEST_DIR)/unit/%.c
+	@$(CC) $(filter-out shell.c, $(SOURCE_FILES)) $< -o $(TMP_DIR)/$@.o
+	@if ./$(TMP_DIR)/$@.o 2>&1 >/dev/null; then \
+		echo "Test $@ succedded"; \
+	else \
+		echo "Test $@ failed"; \
+		./$(TMP_DIR)/$@.o; \
+	fi; \
+
+run_tests: setup_dirs
 	@$(MAKE) announce MESSAGE="Running unit tests"
-	@$(MAKE) -k unit_tests
+	@$(MAKE) -k -j 8 unit_tests
 	@$(MAKE) announce MESSAGE="Running integration tests"
-	@$(MAKE) -k integration_tests
+	@$(MAKE) -k -j 8 integration_tests
 
 clean:
 	rm ./${BUILD_DIR}/*.out

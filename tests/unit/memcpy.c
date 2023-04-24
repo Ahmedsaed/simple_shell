@@ -1,5 +1,6 @@
 #include "./../../main.h"
 #include <string.h>
+#include "../test.h"
 
 #define NTC 2
 

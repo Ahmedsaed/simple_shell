@@ -56,3 +56,46 @@ void *_realloc(void *ptr, unsigned int old_size,
 	free(ptr);
 	return (p);
 }
+
+/**
+ * _memchr - returns a pointer to the first occurrence of chr in s
+ *
+ * @s: string to search in
+ * @c: character to find
+ * @n: number of bytes
+ *
+ * Return: pointer to c if found. otherwise, NULL
+ */
+void *_memchr(char *s, char c, int n)
+{
+	char *p = s;
+
+	while (n-- > 0)
+	{
+		if (*p == c)
+			return ((void *)p);
+		p++;
+	}
+
+	return (NULL);
+}
+
+/**
+ * _calloc - allocates memory and initializes it to zeros
+ *
+ * @count: This is the number of elements to be allocated
+ * @size: the size of one element
+ *
+ * Return: pointer to allocated memory block
+ */
+void *_calloc(size_t count, size_t size)
+{
+	size_t i;
+	void *ptr = malloc(count * size);
+
+	if (ptr != NULL)
+		for (i = 0; i < count * size; i++)
+			*((char *)ptr + i) = 0;
+
+	return (ptr);
+}

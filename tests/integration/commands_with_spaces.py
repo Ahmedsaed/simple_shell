@@ -1,9 +1,14 @@
 import subprocess
-import os
 import difflib
+import os
 
 # Define the input for the shell
-shell_input = "\n".join([]) 
+shell_input = "\n".join([
+        "   ls     ",
+        "echo           \"asdasd\"",
+        "echo \\n",
+        "   /bin/ls     -l  /tmp"
+    ])
 
 # run your compiled shell executable and capture its output
 shell_process = subprocess.run("./build/shell.out", input=shell_input, capture_output=True, text=True)
