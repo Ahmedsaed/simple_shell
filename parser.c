@@ -35,7 +35,7 @@ int parse_cmd(char *cmd, char **argv)
 		{
 			if (len >= MAX_ARG_LEN)
 				return (-1);
-			if (c == '\\' && (cmd[i + 1] == '\"' || cmd[i + 1] == '\''))
+			if (c == '\\' && cmd[i + 1] != '\0')
 				c = cmd[++i];
 			arg[len++] = c;
 		}
