@@ -12,6 +12,7 @@
 #define UNUSED __attribute__((unused))
 #define MAX_ARGS_COUNT 100
 #define MAX_ARG_LEN 100
+#define PATH_MAX 4096
 
 extern char **environ;
 extern char *prog_name;
@@ -38,6 +39,7 @@ char *_strcpy(char *dest, char *src);
 char *_strncpy(char *dest, char *src, size_t n);
 char *_strcat(char *dest, char *src);
 char *_strdup(char *s);
+char *_substr(char *src, int m, int n);
 int _atoi(char *str);
 
 /* getline functions */

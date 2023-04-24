@@ -33,5 +33,10 @@ void _env(void)
 	int idx;
 
 	for (idx = 0; environ[idx]; idx++)
-		printf("%s\n", environ[idx]);
+	{
+		print_str(environ[idx]);
+		print_str("\n");
+	}
 }
+
+
