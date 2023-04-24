@@ -23,7 +23,7 @@ void free_buffer(char **buffer,
  *
  * @lineptr: the buffer that the function should update each call
  * @n: the size of the line_buffer after update
- * @stream: the that the function should read the characters from
+ * @stream: the stream that the function should read the characters from
  *
  * Return: On  success, return  the  number of characters read,
  * including the delimiter character, but not including the

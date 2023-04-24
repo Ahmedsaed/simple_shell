@@ -11,14 +11,17 @@ int main()
 	char *before_setup;
 	char *after_setup;
 
-	before_setup = getenv("PATH");
+	before_setup = _getenv("PATH");
 	my_rv = setup_env();
 	after_setup = _getenv("PATH");
 
-	if (strcmp(before_setup, after_setup) == 0)
+	if (_strcmp(before_setup, after_setup) == 0)
 	{
 		free_env();
-		return (rv);
+		after_setup = _getenv("PATH");
+		
+		if (after_setup == NULL)
+			return (rv);
 	}
 
 	printf("WARNING: Failed at environmental setup!\n");

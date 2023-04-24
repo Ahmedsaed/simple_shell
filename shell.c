@@ -16,6 +16,9 @@ int main(int argc, char **argv)
 	size_t line_size = 0;
 	char *line_buffer = NULL;
 
+	if (setup_env())
+		return (-1);
+
 	prog_name = argv[0];
 
 	(void)argv;
@@ -30,8 +33,10 @@ int main(int argc, char **argv)
 			break;
 	}
 
+	free_env();
 	free(line_buffer);
 	print_str("\n");
+
 	return (0);
 }
 
@@ -52,6 +57,10 @@ void run_cmd(char *line_buffer)
 		exit_shell(line_buffer, argv);
 	else if (_strcmp(argv[0], "env") == 0)
 		_env();
+	else if (_strcmp(argv[0], "setenv") == 0)
+		_setenv(argv[1], argv[2]);
+	else if (_strcmp(argv[0], "unsetenv") == 0)
+		_unsetenv(argv[1]);
 	else if (n != 0)
 		run_sys_cmd(argv, n);
 

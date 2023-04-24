@@ -1,5 +1,9 @@
 #include "main.h"
 
+/* local helper function headers */
+int _getenvLen(void);
+
+
 /**
  * setup_env - Makes a copy of the original environment.
  * Return: 0 if successful, -1 if failed.
@@ -7,11 +11,10 @@
 
 int setup_env(void)
 {
-	int env_cnt, var_cnt, i, j;
+	int env_cnt, var_cnt, i;
 	char **new_environ;
 
-	for (env_cnt = 0; environ[env_cnt] != NULL; env_cnt++)
-		;
+	env_cnt = _getenvLen();
 
 	new_environ = malloc(sizeof(char *) * (env_cnt + 1));
 
@@ -32,10 +35,7 @@ int setup_env(void)
 
 		if (new_environ[i] == NULL)
 		{
-			for (j = 0; new_environ[j] != NULL; j++)
-				free(new_environ[i]);
-			free(new_environ);
-
+			free_env();
 			return (-1);
 		}
 	}
@@ -80,10 +80,13 @@ char *_getenv(char *var)
 
 	len = _strlen(var);
 
-	for (idx = 0; environ[idx]; idx++)
+	if (environ != NULL)
 	{
-		if (_strncmp(var, environ[idx], len) == 0)
-			return (environ[idx] + len + 1);
+		for (idx = 0; environ[idx]; idx++)
+		{
+			if (_strncmp(var, environ[idx], len) == 0)
+				return (environ[idx] + len + 1);
+		}
 	}
 
 	return (NULL);
