@@ -6,7 +6,8 @@ import os
 shell_input = "\n".join([
         "   ls     ",
         "echo           \"asdasd\"",
-        "echo \\n"
+        "echo \\n",
+        "   /bin/ls     -l  /tmp"
     ])
 
 # run your compiled shell executable and capture its output
