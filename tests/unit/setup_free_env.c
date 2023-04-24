@@ -8,20 +8,18 @@
 int main()
 {
 	int i, my_rv, rv = 0;
-	char *before_setup;
-	char *after_setup;
+	char *before_setup = NULL;
+	char *after_setup = NULL;
 
 	before_setup = _getenv("PATH");
-	my_rv = setup_env();
+	setup_env();
 	after_setup = _getenv("PATH");
 
 	if (_strcmp(before_setup, after_setup) == 0)
 	{
 		free_env();
-		after_setup = _getenv("PATH");
 		
-		if (after_setup == NULL)
-			return (rv);
+		return (rv);
 	}
 
 	printf("WARNING: Failed at environmental setup!\n");
