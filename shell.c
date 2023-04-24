@@ -10,7 +10,6 @@ char *prog_name;
  *
  * Return: 0 on success
  */
-
 int main(int argc, char **argv)
 {
 	size_t line_size = 0;

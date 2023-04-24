@@ -72,5 +72,13 @@ check_memory:
 	(make announce MESSAGE="No memory leaks found" && exit 0) || \
 	(echo "Error: memory leak found" && cat ${TMP_DIR}/$$file.vg && exit 1) \
 
+check_forbidden_functions:
+	@python tests/helper_functions.py . check > /dev/null && \
+	($(MAKE) announce MESSAGE="No forbidden functions used" && exit 0) || \
+	($(MAKE) announce MESSAGE="Forbidden functions used" && python tests/helper_functions.py . check && exit 1)
+
+print_used_functions:
+	@python tests/helper_functions.py . all
+
 clear_screen:
 	clear
