@@ -10,7 +10,8 @@ shell_input = "\n".join([
         "ls;",
         "ls ;",
         "ls ; ls /var",
-        "ls /tmp; echo \"hello there \"; ls /var"
+        "ls /tmp; echo \"hello there \"; ls /var",
+        "ls /ngth; echo \"I am bored\"; ls /tmp; ls /hehe"
     ])
 
 run_test(shell_input)

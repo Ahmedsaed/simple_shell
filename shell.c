@@ -4,7 +4,7 @@ char *prog_name;
 
 void shell_prompt(void);
 void run_cmd(char *line_buffer);
-void run_sys_cmd(char **argv, int n);
+int run_sys_cmd(char **argv, int n);
 
 /**
  * main - entry point
@@ -69,12 +69,12 @@ void shell_prompt(void)
  */
 void run_cmd(char *line_buffer)
 {
-	int n, j;
+	int n, j, cmd_status, current_status = 0;
 	char *argv[MAX_ARGS_COUNT + 1], *cmd, *rest, sep;
 
 	rest = line_buffer;
 
-	while (rest != NULL)
+	while (rest != NULL && current_status == 0)
 	{
 		split_cmds(rest, &sep, &cmd, &rest);
 
@@ -93,10 +93,15 @@ void run_cmd(char *line_buffer)
 		else if (_strcmp(argv[0], "cd") == 0)
 			change_dir(argv[1]);
 		else
-			run_sys_cmd(argv, n);
+			cmd_status = run_sys_cmd(argv, n);
 
 		for (j = 0; j < n; j++)
 			free(argv[j]);
+
+		if (sep == '|' && cmd_status == 0)
+			break;
+		else if (sep == '&' && cmd_status != 0)
+			break;
 	}
 }
 
@@ -107,12 +112,12 @@ void run_cmd(char *line_buffer)
  * @argv: array of strings storing the command and it's arguments
  * @n: number of arguments in argv
  *
- * Return: void.
+ * Return: exit status code of child process
  */
-void run_sys_cmd(char **argv, int n)
+int run_sys_cmd(char **argv, int n)
 {
 	char *argv_0;
-	int child_pid, child_status, j;
+	int child_pid, child_status = -1, j;
 
 	argv_0 = argv[0];
 	argv[0] = parse_path(argv[0]);
@@ -135,4 +140,6 @@ void run_sys_cmd(char **argv, int n)
 	}
 	else if (child_pid > 0)
 		wait(&child_status);
+
+	return (child_status);
 }

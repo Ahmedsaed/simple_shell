@@ -118,7 +118,7 @@ void split_cmds(char *buffer, UNUSED char *separator, char **cmd, char **rest)
 	char quote = '\0';
 
 	*cmd = buffer;
-	separator = '\0';
+	*separator = '\0';
 	*rest = NULL;
 
 	for (i = 0; buffer[i] != '\0'; i++)
@@ -133,8 +133,21 @@ void split_cmds(char *buffer, UNUSED char *separator, char **cmd, char **rest)
 
 		if (buffer[i] == ';' && !quote)
 		{
+			*separator = ';';
 			buffer[i] = '\0';
 			*rest = buffer + i + 1;
+			break;
+		}
+
+		if (
+			(_strncmp(buffer + i, "||", 2) == 0 ||
+			_strncmp(buffer + i, "&&", 2) == 0) &&
+			!quote)
+		{
+			*separator = buffer[i];
+			buffer[i] = '\0';
+			buffer[i + 1] = ' ';
+			*rest = buffer + i + 2;
 			break;
 		}
 	}

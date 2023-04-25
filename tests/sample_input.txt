@@ -3,4 +3,15 @@ ls
 echo "hallo world"
 setenv hallo hmm
 unsetenv hallo
+cd /home
+cd -
+ls; ls /var
+ls /var; ls /var; echo "hallo world"
+ls /tmp || ls /var
+ls /tasasd || ls /var
+ls /var || ls /asdasd
+echo "asd" && ls /tmp
+ls /tasasd && ls /var
+ls /var && ls /asdasd
+
 exit
