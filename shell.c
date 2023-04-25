@@ -70,25 +70,34 @@ void shell_prompt(void)
 void run_cmd(char *line_buffer)
 {
 	int n, j;
-	char *argv[MAX_ARGS_COUNT + 1];
+	char *argv[MAX_ARGS_COUNT + 1], *cmd, *rest, sep;
 
-	n = parse_cmd(line_buffer, argv);
+	rest = line_buffer;
 
-	if (_strcmp(argv[0], "exit") == 0)
-		exit_shell(line_buffer, argv);
-	else if (_strcmp(argv[0], "env") == 0)
-		_env();
-	else if (_strcmp(argv[0], "setenv") == 0)
-		_setenv(argv[1], argv[2]);
-	else if (_strcmp(argv[0], "unsetenv") == 0)
-		_unsetenv(argv[1]);
-	else if (_strcmp(argv[0], "cd") == 0)
-		change_dir(argv[1]);
-	else if (n != 0)
-		run_sys_cmd(argv, n);
+	while (rest != NULL)
+	{
+		split_cmds(rest, &sep, &cmd, &rest);
 
-	for (j = 0; j < n; j++)
-		free(argv[j]);
+		n = parse_cmd(cmd, argv);
+		if (n == 0)
+			break;
+
+		if (_strcmp(argv[0], "exit") == 0)
+			exit_shell(line_buffer, argv);
+		else if (_strcmp(argv[0], "env") == 0)
+			_env();
+		else if (_strcmp(argv[0], "setenv") == 0)
+			_setenv(argv[1], argv[2]);
+		else if (_strcmp(argv[0], "unsetenv") == 0)
+			_unsetenv(argv[1]);
+		else if (_strcmp(argv[0], "cd") == 0)
+			change_dir(argv[1]);
+		else
+			run_sys_cmd(argv, n);
+
+		for (j = 0; j < n; j++)
+			free(argv[j]);
+	}
 }
 
 

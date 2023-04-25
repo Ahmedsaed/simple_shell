@@ -95,3 +95,47 @@ char *parse_path(char *cmd)
 	free(path);
 	return (_strdup(cmd));
 }
+
+/**
+ * split_cmds - spilts the buffer containing commands into two strings
+ *
+ * @buffer: a string that contains the commands
+ * @separator: the separator that should be used to split the buffer
+ * @cmd: a pointer to the first command
+ * @rest: a pointer to the rest of the string
+ *
+ * Note: this function separates the BUFFER by ';', '||' or '&&'
+ * and sets SEPARATOR char to the one found then it assigns the
+ * first half (first command) to CMD pointer
+ * and assigns the rest of the string to REST pointer.
+ *
+ * If no SEPARATOR can be found in BUFFER, the fucntion assigns the
+ * whole BUFFER into CMD and REST is pointing to NULL
+ */
+void split_cmds(char *buffer, UNUSED char *separator, char **cmd, char **rest)
+{
+	int i;
+	char quote = '\0';
+
+	*cmd = buffer;
+	separator = '\0';
+	*rest = NULL;
+
+	for (i = 0; buffer[i] != '\0'; i++)
+	{
+		if (buffer[i] == '\'' || buffer[i] == '\"')
+		{
+			if (!quote)
+				quote = buffer[i];
+			else if (quote == buffer[i])
+				quote = '\0';
+		}
+
+		if (buffer[i] == ';' && !quote)
+		{
+			buffer[i] = '\0';
+			*rest = buffer + i + 1;
+			break;
+		}
+	}
+}
