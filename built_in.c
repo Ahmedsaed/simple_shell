@@ -49,6 +49,10 @@ char *format_tilde(char *str)
 	char *home, *username, *result, *tmp;
 
 	username = _getenv("USERNAME");
+
+	if (username == NULL)
+		return (NULL);
+
 	len = _strlen(username);
 	home = (char *)malloc(sizeof(char) * (7 + len));
 	home[0] = '\0';
