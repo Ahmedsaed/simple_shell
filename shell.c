@@ -29,7 +29,8 @@ int main(int argc, char **argv)
 
 	while (1)
 	{
-		shell_prompt();
+		if (isatty(STDIN_FILENO))
+			shell_prompt();
 		if (_getline(&line_buffer, &line_size, STDIN_FILENO) != -1)
 			run_cmd(line_buffer);
 		else
@@ -38,8 +39,9 @@ int main(int argc, char **argv)
 
 	free_env();
 	free(line_buffer);
-	print_str("\n");
 
+	if (isatty(STDIN_FILENO))
+		print_str("\n");
 	return (0);
 }
 
@@ -93,6 +95,8 @@ void run_cmd(char *line_buffer)
 			cmd_status = (_unsetenv(argv[1]) ? 1 : 0);
 		else if (_strcmp(argv[0], "cd") == 0)
 			cmd_status = change_dir(argv[1]);
+		else if (_strcmp(argv[0], "alias") == 0)
+			cmd_status = alias(argv);
 		else
 			cmd_status = run_sys_cmd(argv, n);
 
