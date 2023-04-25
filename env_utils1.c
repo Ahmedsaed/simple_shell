@@ -3,7 +3,6 @@
 /* local helper function headers */
 int _getenvLen(void);
 
-
 /**
  * setup_env - Makes a copy of the original environment.
  * Return: 0 if successful, -1 if failed.
@@ -117,7 +116,7 @@ int _setenv(char *name, char *value)
 	if (name == NULL || value == NULL || name[0] == '\0'
 			|| _strchr(name, '=') != NULL)
 	{
-		 /* perror(prog_name); */
+		print_err("Error: Invalid Arguments!");
 		return (-1);
 	}
 
@@ -159,7 +158,7 @@ int _unsetenv(char *name)
 
 	if (name == NULL || name[0] == '\0' || _strchr(name, '=') != NULL)
 	{
-		 /* perror(prog_name); */
+		print_err("Error: Invalid Arguments!");
 		return (-1);
 	}
 

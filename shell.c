@@ -54,7 +54,7 @@ void shell_prompt(void)
 		perror("getcwd() error");
 
 	formatted_str = format_tilde(cwd);
-	if (formatted_str != NULL)
+	if ((formatted_str = format_tilde(cwd)) != NULL)
 		_strcpy(cwd, formatted_str);
 	print_str(cwd);
 	free(formatted_str);

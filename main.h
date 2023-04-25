@@ -28,7 +28,6 @@ char *format_tilde(char *str);
 void change_dir(char *dir);
 
 /* string functions */
-void print_str(char *s);
 size_t _strlen(char *s);
 int _strcmp(char *s1, char *s2);
 int _strncmp(char *s1, char *s2, size_t n);
@@ -57,5 +56,9 @@ void *_realloc(void *ptr, unsigned int old_size,
 		unsigned int new_size);
 void *_memchr(char *s, char c, int n);
 void *_calloc(size_t count, size_t size);
+
+/* print functions */
+void print_str(char *s);
+void print_err(char *s);
 
 #endif

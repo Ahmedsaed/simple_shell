@@ -105,15 +105,11 @@ void change_dir(char *dir)
 	}
 
 	if (_setenv("OLDPWD", _getenv("PWD")) == -1)
-		/* print error */
 		return;
 
 	if (chdir(dir) == -1)
 		perror(prog_name);
 
 	if (_setenv("PWD", getcwd(cwd, sizeof(cwd))) == -1)
-	{
-		/* print error */
 		return;
-	}
 }

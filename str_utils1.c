@@ -1,18 +1,29 @@
 #include "main.h"
 
 /**
- * print_str - prints a string to stdout
+ * _substr - extracts characters from source
+ *			                between m and n.
  *
- * @s: pointer to an array of chars
+ * @src: string
+ * @m: first character
+ * @n: second character
+ * Return: return string between m & n
  */
 
-void print_str(char *s)
+char *_substr(char *src, int m, int n)
 {
-	int i;
+	int len = n - m, i;
+	char *ptr;
 
-	i = _strlen(s);
+	ptr = (char *)malloc(sizeof(char) * (len + 2));
+	m--;
 
-	write(STDOUT_FILENO, s, i);
+	for (i = m; i < n && (src[i] != '\0'); i++)
+		ptr[i - m] = src[i];
+
+	ptr[len + 1] = '\0';
+
+	return (ptr);
 }
 
 
