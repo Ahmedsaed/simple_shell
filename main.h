@@ -12,13 +12,10 @@
 #define UNUSED __attribute__((unused))
 #define MAX_ARGS_COUNT 100
 #define MAX_ARG_LEN 100
+#define PATH_MAX 4096
 
 extern char **environ;
 extern char *prog_name;
-
-/* Shell functions */
-void run_cmd(char *line_buffer);
-void run_sys_cmd(char **argv, int n);
 
 /* Parsers */
 int parse_cmd(char *cmd, char **argv);
@@ -27,6 +24,8 @@ char *parse_path(char *cmd);
 /* Built-in shell functions */
 void exit_shell(char *line_buffer, char **argv);
 void _env(void);
+char *format_tilde(char *str);
+void change_dir(char *dir);
 
 /* string functions */
 void print_str(char *s);
@@ -38,6 +37,7 @@ char *_strcpy(char *dest, char *src);
 char *_strncpy(char *dest, char *src, size_t n);
 char *_strcat(char *dest, char *src);
 char *_strdup(char *s);
+char *_substr(char *src, int m, int n);
 int _atoi(char *str);
 
 /* getline functions */

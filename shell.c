@@ -2,6 +2,10 @@
 
 char *prog_name;
 
+void shell_prompt(void);
+void run_cmd(char *line_buffer);
+void run_sys_cmd(char **argv, int n);
+
 /**
  * main - entry point
  *
@@ -25,7 +29,7 @@ int main(int argc, char **argv)
 
 	while (1)
 	{
-		print_str("$ ");
+		shell_prompt();
 		if (_getline(&line_buffer, &line_size, STDIN_FILENO) != -1)
 			run_cmd(line_buffer);
 		else
@@ -37,6 +41,23 @@ int main(int argc, char **argv)
 	print_str("\n");
 
 	return (0);
+}
+
+/**
+ * shell_prompt - displays shell prompt to stdout
+ */
+void shell_prompt(void)
+{
+	char cwd[PATH_MAX], *fromated_str;
+
+	if (getcwd(cwd, sizeof(cwd)) == NULL)
+		perror("getcwd() error");
+
+	fromated_str = format_tilde(cwd);
+	_strcpy(cwd, fromated_str);
+	print_str(cwd);
+	free(fromated_str);
+	print_str("$ ");
 }
 
 /**
@@ -60,6 +81,8 @@ void run_cmd(char *line_buffer)
 		_setenv(argv[1], argv[2]);
 	else if (_strcmp(argv[0], "unsetenv") == 0)
 		_unsetenv(argv[1]);
+	else if (_strcmp(argv[0], "cd") == 0)
+		change_dir(argv[1]);
 	else if (n != 0)
 		run_sys_cmd(argv, n);
 
