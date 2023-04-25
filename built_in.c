@@ -23,11 +23,8 @@ void exit_shell(char *line_buffer, char **argv)
 }
 
 /**
- * _env - Outputs all environmental variables.
- *
- * Return: nothing.
+ * _env - prints all environmental variables.
  */
-
 void _env(void)
 {
 	int idx;
@@ -46,7 +43,6 @@ void _env(void)
  * @str: string to search for.
  * Return: string
  */
-
 char *format_tilde(char *str)
 {
 	int len = 0, path_len = 0;
@@ -76,4 +72,39 @@ char *format_tilde(char *str)
 	}
 
 	return (result);
+}
+
+/**
+ * change_dir - changes the directory of the process
+ *
+ * @dir: string - new directory
+ */
+void change_dir(char *dir)
+{
+	char cwd[PATH_MAX];
+
+	if (dir == NULL)
+		dir = _getenv("HOME");
+	else if (_strcmp(dir, "-") == 0)
+	{
+		dir = _getenv("OLDPWD");
+		if (dir == NULL)
+			dir = _getenv("PWD");
+
+		print_str(dir);
+		print_str("\n");
+	}
+
+	if (_setenv("OLDPWD", _getenv("PWD")) == -1)
+		/* print error */
+		return;
+
+	if (chdir(dir) == -1)
+		perror(prog_name);
+
+	if (_setenv("PWD", getcwd(cwd, sizeof(cwd))) == -1)
+	{
+		/* print error */
+		return;
+	}
 }

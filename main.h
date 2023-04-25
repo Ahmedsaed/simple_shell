@@ -17,10 +17,6 @@
 extern char **environ;
 extern char *prog_name;
 
-/* Shell functions */
-void run_cmd(char *line_buffer);
-void run_sys_cmd(char **argv, int n);
-
 /* Parsers */
 int parse_cmd(char *cmd, char **argv);
 char *parse_path(char *cmd);
@@ -29,6 +25,7 @@ char *parse_path(char *cmd);
 void exit_shell(char *line_buffer, char **argv);
 void _env(void);
 char *format_tilde(char *str);
+void change_dir(char *dir);
 
 /* string functions */
 void print_str(char *s);
