@@ -92,7 +92,7 @@ void change_dir(char *dir)
 		dir = _getenv("HOME");
 	else if (_strcmp(dir, "-") == 0)
 	{
-		dir = _getenv("OLDPWD");
+		dir = _strdup(_getenv("OLDPWD"));
 		if (dir == NULL)
 			dir = _getenv("PWD");
 
