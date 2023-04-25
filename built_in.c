@@ -46,21 +46,23 @@ void _env(void)
 char *format_tilde(char *str)
 {
 	int len = 0, path_len = 0;
-	char *home, *username, *result;
+	char *home, *username, *result, *tmp;
 
 	username = _getenv("USERNAME");
 	len = _strlen(username);
-	home = (char *)malloc(sizeof(char *) * (7 + len));
+	home = (char *)malloc(sizeof(char) * (7 + len));
+	home[0] = '\0';
 
 	if (home == NULL)
 		return (NULL);
 
-	home = _strcat(home, "/home/");
-	home = _strcat(home, username);
+	_strcat(home, "/home/");
+	_strcat(home, username);
 	len = _strlen(home);
 	path_len = _strlen(str);
 
-	result = (char *)malloc(sizeof(char *) * (len + path_len + 1));
+	result = (char *)malloc(sizeof(char) * (len + path_len + 1));
+	result[0] = '\0';
 
 	if (result == NULL)
 		return (NULL);
@@ -68,9 +70,12 @@ char *format_tilde(char *str)
 	if (_strncmp(str, home, len) == 0)
 	{
 		_strcat(result, "~");
-		_strcat(result, _substr(str, len + 1, path_len));
+		tmp = _substr(str, len + 1, path_len);
+		_strcat(result, tmp);
+		free(tmp);
 	}
 
+	free(home);
 	return (result);
 }
 

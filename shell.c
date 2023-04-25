@@ -49,13 +49,15 @@ int main(int argc, char **argv)
  */
 void shell_prompt(void)
 {
-	char cwd[PATH_MAX];
+	char cwd[PATH_MAX], *fromated_str;
 
 	if (getcwd(cwd, sizeof(cwd)) == NULL)
 		perror("getcwd() error");
 
-	_strcpy(cwd, format_tilde(cwd));
+	fromated_str = format_tilde(cwd);
+	_strcpy(cwd, fromated_str);
 	print_str(cwd);
+	free(fromated_str);
 	print_str("$ ");
 }
 
