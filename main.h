@@ -27,6 +27,7 @@ void exit_shell(char *line_buffer, char **argv);
 void _env(void);
 char *format_tilde(char *str);
 int change_dir(char *dir);
+int alias(char **tokens);
 
 /* string functions */
 size_t _strlen(char *s);

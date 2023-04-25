@@ -14,4 +14,11 @@ echo "asd" && ls /tmp
 ls /tasasd && ls /var
 ls /var && ls /asdasd
 
+alias
+alias name="ahmed"
+alias l=lol e=eoe
+alias
+alias l=loooooool
+alias e=er
+alias
 exit

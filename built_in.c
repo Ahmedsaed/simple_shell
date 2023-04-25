@@ -1,5 +1,8 @@
 #include "main.h"
 
+void print_alias(char *name);
+void set_alias(char *new_value);
+
 /**
  * exit_shell - clears all allocated memory and
  * exits the shell
@@ -128,6 +131,31 @@ int change_dir(char *dir)
 	{
 		print_err("Failed to update PWD env variable");
 		return (1);
+	}
+
+	return (0);
+}
+
+/**
+ * alias - alias built in command to print and set aliases
+ *
+ * @tokens: a tockenized string of commands and arguments
+ *
+ * Return: 0 on sucess, 1 on fialure
+ */
+int alias(char **tokens)
+{
+	int i;
+
+	if (tokens[1] == NULL)
+		print_alias(NULL);
+	else
+	{
+		for (i = 1; tokens[i] != NULL; i++)
+			if (_strchr(tokens[i], '=') == NULL)
+				print_alias(tokens[i]);
+			else
+				set_alias(tokens[i]);
 	}
 
 	return (0);

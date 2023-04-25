@@ -15,7 +15,7 @@ int parse_cmd(char *cmd, char **argv)
 
 	for (i = 0; (c = cmd[i]) != '\0'; i++)
 	{
-		if (c == '\'' || c == '\"')
+		if ((c == '\'' || c == '\"') && (len == 0 || quote))
 		{
 			if (!quote)
 				quote = c;

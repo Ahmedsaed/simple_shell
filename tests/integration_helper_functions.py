@@ -10,7 +10,7 @@ def run_test(shell_input):
 
     # run your compiled shell executable and capture its output
     shell_process = subprocess.run("./build/shell.out", input=shell_input, capture_output=True, text=True)
-    shell_output = re.sub(r".*\$ ", "", shell_process.stdout, flags=re.MULTILINE).strip()
+    shell_output = shell_process.stdout.strip()
     shell_stderr = shell_process.stderr.strip().replace("./build/shell.out", "shell")
 
     # run bash and capture its output
@@ -20,7 +20,7 @@ def run_test(shell_input):
 
     # compare the output of your shell and bash
     out, err = difflib.SequenceMatcher(None, shell_output, bash_output), difflib.SequenceMatcher(None, shell_stderr, bash_stderr)
-    if out.ratio() == 1 and len(shell_stderr) == len(bash_stderr): # err.ratio() == 1
+    if out.ratio() == 1 and len(shell_stderr.split('\n')) == len(bash_stderr.split('\n')): # err.ratio() == 1
         print(f"integration test {filename} passed!")
     else:
         print(f"integration test {filename} failed.")
