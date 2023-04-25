@@ -69,14 +69,15 @@ void shell_prompt(void)
  */
 void run_cmd(char *line_buffer)
 {
-	int n, j, cmd_status, current_status = 0;
+	int n, j, cmd_status;
 	char *argv[MAX_ARGS_COUNT + 1], *cmd, *rest, sep;
 
 	rest = line_buffer;
 
-	while (rest != NULL && current_status == 0)
+	while (rest != NULL)
 	{
 		split_cmds(rest, &sep, &cmd, &rest);
+		cmd_status = 0;
 
 		n = parse_cmd(cmd, argv);
 		if (n == 0)
@@ -87,11 +88,11 @@ void run_cmd(char *line_buffer)
 		else if (_strcmp(argv[0], "env") == 0)
 			_env();
 		else if (_strcmp(argv[0], "setenv") == 0)
-			_setenv(argv[1], argv[2]);
+			cmd_status = (_setenv(argv[1], argv[2]) ? 1 : 0);
 		else if (_strcmp(argv[0], "unsetenv") == 0)
-			_unsetenv(argv[1]);
+			cmd_status = (_unsetenv(argv[1]) ? 1 : 0);
 		else if (_strcmp(argv[0], "cd") == 0)
-			change_dir(argv[1]);
+			cmd_status = change_dir(argv[1]);
 		else
 			cmd_status = run_sys_cmd(argv, n);
 
@@ -116,12 +117,10 @@ void run_cmd(char *line_buffer)
  */
 int run_sys_cmd(char **argv, int n)
 {
-	char *argv_0;
+	char *prog_path;
 	int child_pid, child_status = -1, j;
 
-	argv_0 = argv[0];
-	argv[0] = parse_path(argv[0]);
-	free(argv_0);
+	prog_path = parse_path(argv[0]);
 
 	child_pid = fork();
 	if (child_pid == -1)
@@ -129,11 +128,12 @@ int run_sys_cmd(char **argv, int n)
 
 	if (child_pid == 0)
 	{
-		if (execve(argv[0], argv, environ) == -1)
+		if (execve(prog_path, argv, environ) == -1)
 		{
 			perror(prog_name);
 			for (j = 0; j < n; j++)
 				free(argv[j]);
+			free(prog_path);
 
 			_exit(1);
 		}
@@ -141,5 +141,6 @@ int run_sys_cmd(char **argv, int n)
 	else if (child_pid > 0)
 		wait(&child_status);
 
+	free(prog_path);
 	return (child_status);
 }

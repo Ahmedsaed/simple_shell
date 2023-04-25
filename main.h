@@ -26,7 +26,7 @@ void split_cmds(char *buffer, char *separator, char **cmd, char **rest);
 void exit_shell(char *line_buffer, char **argv);
 void _env(void);
 char *format_tilde(char *str);
-void change_dir(char *dir);
+int change_dir(char *dir);
 
 /* string functions */
 size_t _strlen(char *s);

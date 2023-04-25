@@ -5,7 +5,6 @@
  *
  * @s: pointer to an array of chars
  */
-
 void print_str(char *s)
 {
 	int i;
@@ -20,7 +19,6 @@ void print_str(char *s)
  *
  * @s: error message to print.
  */
-
 void print_err(char *s)
 {
 	int i;

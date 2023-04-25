@@ -7,7 +7,6 @@ int _getenvLen(void);
  * setup_env - Makes a copy of the original environment.
  * Return: 0 if successful, -1 if failed.
  */
-
 int setup_env(void)
 {
 	int env_cnt, var_cnt, i;
@@ -50,7 +49,6 @@ int setup_env(void)
  * free_env - frees the memory that the environment copy
  *                                                takes.
  */
-
 void free_env(void)
 {
 	int i;
@@ -69,7 +67,6 @@ void free_env(void)
  * Return: Null if environmental variable doesnt exist.
  *		   Otherwise, value of environmental variable.
  */
-
 char *_getenv(char *var)
 {
 	int idx, len;
@@ -103,11 +100,9 @@ char *_getenv(char *var)
  * Return: 0 if successful, -1 if not.
  *
  * note: if envname refers to a string with "=",
- *						   setenv must fail.
- *		 if name is empty, setenv must fail.
+ * setenv must fail. if name is empty, setenv must fail.
  * if setenv fails, must print EINVAL from <errno.h>.
  */
-
 int _setenv(char *name, char *value)
 {
 	int len;
@@ -150,7 +145,6 @@ int _setenv(char *name, char *value)
  * note: the algorithm unsets by shifting all
  *		  successive entries back one element.
  */
-
 int _unsetenv(char *name)
 {
 	int len;

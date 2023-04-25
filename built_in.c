@@ -16,6 +16,7 @@ void exit_shell(char *line_buffer, char **argv)
 
 	for (j = 0; argv[j] != NULL; j++)
 		free(argv[j]);
+
 	free_env();
 	free(line_buffer);
 
@@ -87,13 +88,16 @@ char *format_tilde(char *str)
  * change_dir - changes the directory of the process
  *
  * @dir: string - new directory
+ *
+ * Return: 0 on sucess, 1 on failure
  */
-void change_dir(char *dir)
+int change_dir(char *dir)
 {
 	char cwd[PATH_MAX];
 
 	if (dir == NULL)
 		dir = _strdup(_getenv("HOME"));
+
 	else if (_strcmp(dir, "-") == 0)
 	{
 		dir = _strdup(_getenv("OLDPWD"));
@@ -107,12 +111,24 @@ void change_dir(char *dir)
 		dir = _strdup(dir);
 
 	if (_setenv("OLDPWD", _getenv("PWD")) == -1)
-		return;
+	{
+		print_err("Failed to update OLDPWD env variable");
+		return (1);
+	}
 
 	if (chdir(dir) == -1)
+	{
+		free(dir);
 		perror(prog_name);
+		return (1);
+	}
 
 	free(dir);
 	if (_setenv("PWD", getcwd(cwd, sizeof(cwd))) == -1)
-		return;
+	{
+		print_err("Failed to update PWD env variable");
+		return (1);
+	}
+
+	return (0);
 }
