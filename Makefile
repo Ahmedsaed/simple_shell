@@ -32,7 +32,7 @@ unit_tests: $(UNIT_TEST_FILES)
 $(UNIT_TEST_FILES): %: $(TEST_DIR)/unit/%.c
 	@$(CC) $(filter-out shell.c, $(SOURCE_FILES)) $< -o $(TMP_DIR)/$@.o
 	@if ./$(TMP_DIR)/$@.o 2>&1 >/dev/null; then \
-		echo "Test $@ succedded"; \
+		echo "Test $@ passed"; \
 	else \
 		echo "Test $@ failed"; \
 		./$(TMP_DIR)/$@.o; \
