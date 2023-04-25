@@ -14,7 +14,7 @@ char *prog_name;
 int main(int argc, char **argv)
 {
 	size_t line_size = 0;
-	char *line_buffer = NULL;
+	char *line_buffer = NULL, cwd[PATH_MAX];
 
 	if (setup_env())
 		return (-1);
@@ -26,6 +26,14 @@ int main(int argc, char **argv)
 
 	while (1)
 	{
+		if (getcwd(cwd, sizeof(cwd)) == NULL)
+		{
+			perror("getcwd() error");
+			return (-1);
+		}
+
+		_strcpy(cwd, format_tilde(cwd));
+		print_str(cwd);
 		print_str("$ ");
 		if (_getline(&line_buffer, &line_size, STDIN_FILENO) != -1)
 			run_cmd(line_buffer);

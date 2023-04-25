@@ -28,6 +28,7 @@ char *parse_path(char *cmd);
 /* Built-in shell functions */
 void exit_shell(char *line_buffer, char **argv);
 void _env(void);
+char *format_tilde(char *str);
 
 /* string functions */
 void print_str(char *s);
