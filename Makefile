@@ -14,7 +14,7 @@ HEADER_FILES = $(wildcard *.h)
 INTEGRATION_TESTS_FILES = $(patsubst $(TEST_DIR)/integration/%.py,%,$(wildcard $(TEST_DIR)/integration/*.py))
 UNIT_TEST_FILES = $(patsubst %.c, %, $(notdir $(wildcard $(TEST_DIR)/unit/*.c)))
 
-all: clear_screen check_style build run_tests check_memory
+all: clear_screen check_style build run_tests check_memory check_forbidden_functions
 
 build: setup_dirs
 	@${CC} ${CFlags} ${SOURCE_FILES} -o ./$(BUILD_DIR)/${OUT_FILE}.out

@@ -5,6 +5,7 @@ char *prog_name;
 void shell_prompt(void);
 void run_cmd(char *line_buffer);
 int run_sys_cmd(char **argv, int n);
+void sig_handler(int sig);
 
 /**
  * main - entry point
@@ -19,6 +20,7 @@ int main(int argc, char **argv)
 	size_t line_size = 0;
 	char *line_buffer = NULL;
 
+	signal(SIGINT, sig_handler);
 	if (setup_env())
 		return (-1);
 
@@ -123,8 +125,14 @@ int run_sys_cmd(char **argv, int n)
 {
 	char *prog_path;
 	int child_pid, child_status = -1, j;
+	struct stat st;
 
 	prog_path = parse_path(argv[0]);
+	if (stat(prog_path, &st) != 0)
+	{
+		perror(prog_name);
+		return (1);
+	}
 
 	child_pid = fork();
 	if (child_pid == -1)
@@ -147,4 +155,16 @@ int run_sys_cmd(char **argv, int n)
 
 	free(prog_path);
 	return (child_status);
+}
+
+/**
+ * sig_handler - handle SIGINT signal
+ *
+ * @sig: signal value
+ */
+void sig_handler(int sig)
+{
+	print_str("\n");
+	shell_prompt();
+	(void) sig;
 }
