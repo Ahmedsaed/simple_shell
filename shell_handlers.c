@@ -55,7 +55,7 @@ void handle_aliases(char **argv)
 	if (alias_env == NULL)
 		return;
 
-	for (i = 0; i < 1 && argv[i] != NULL; i++)
+	for (i = 0; argv[i] != NULL; i++)
 	{
 		len = _strlen(argv[i]);
 		alias_value = alias_env;
