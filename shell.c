@@ -54,6 +54,9 @@ int main(int argc, char **argv)
 	free_env();
 	free(line_buffer);
 
+	if (fd != STDIN_FILENO)
+		close(fd);
+
 	if (isatty(fd))
 		print_str("\n");
 	return (status_code);
