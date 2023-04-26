@@ -157,5 +157,5 @@ int alias(char **tokens)
 		else
 			status |= set_alias(tokens[i]);
 
-	return ((status) ? 1 : 0);
+	return ((status) ? 2 : 0);
 }
