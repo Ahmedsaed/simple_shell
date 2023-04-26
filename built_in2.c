@@ -100,6 +100,7 @@ int set_alias(char *new_value)
 		return (2);
 	}
 	new_alias[0] = '\0';
+	update_alias_env(new_alias, new_value, 0);
 
 	alias_value = alias_env;
 	for (i = 0; alias_env[i] != '\0'; i++)
@@ -114,7 +115,7 @@ int set_alias(char *new_value)
 			alias_value = alias_env + i + 1;
 		}
 
-	update_alias_env(new_alias, new_value, 1);
+	update_alias_env(new_alias, "", 1);
 	free(new_alias);
 	free(new_value);
 	return (0);
@@ -132,7 +133,9 @@ int set_alias(char *new_value)
 void update_alias_env(char *new_alias, char *new_value, int update_env)
 {
 	_strcat(new_alias, new_value);
-	_strcat(new_alias, ":");
+
+	if (new_value[0] != '\0')
+		_strcat(new_alias, ":");
 
 	if (update_env)
 		_setenv("alias", new_alias);

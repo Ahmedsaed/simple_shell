@@ -19,9 +19,20 @@ void sig_handler(int sig);
 int main(int argc, char **argv)
 {
 	size_t line_size = 0;
+	int fd = STDIN_FILENO;
 	char *line_buffer = NULL;
 
 	signal(SIGINT, sig_handler);
+	if (argc > 1)
+	{
+		fd = open(argv[1], O_RDONLY);
+		if (fd == -1)
+		{
+			print_err("Can't open file");
+			return (127);
+		}
+	}
+
 	if (setup_env())
 		return (-1);
 
@@ -32,9 +43,9 @@ int main(int argc, char **argv)
 
 	while (1)
 	{
-		if (isatty(STDIN_FILENO))
+		if (isatty(fd))
 			shell_prompt();
-		if (_getline(&line_buffer, &line_size, STDIN_FILENO) != -1)
+		if (_getline(&line_buffer, &line_size, fd) != -1)
 			run_cmd(line_buffer);
 		else
 			break;
@@ -43,7 +54,7 @@ int main(int argc, char **argv)
 	free_env();
 	free(line_buffer);
 
-	if (isatty(STDIN_FILENO))
+	if (isatty(fd))
 		print_str("\n");
 	return (status_code);
 }
