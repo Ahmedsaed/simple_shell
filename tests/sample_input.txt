@@ -25,4 +25,8 @@ alias
 echo $PATH
 setenv name ahmed
 echo $name
+echo $$
+
+ls asdasd
+echo $?
 exit

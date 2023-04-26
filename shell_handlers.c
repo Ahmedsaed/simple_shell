@@ -14,17 +14,26 @@ void handle_variables(char **argv)
 	{
 		if (argv[i][0] == '$')
 		{
-			value = _getenv(argv[i] + 1);
-			if (value == NULL)
+			if (_strncmp(argv[i], "$$", 2) == 0)
+				value = _itoa(getpid());
+			else if (_strncmp(argv[i], "$?", 2) == 0)
+				value = _itoa(status_code);
+			else
 			{
-				argv[i][0] = '\0';
-				continue;
+				value = _strdup(_getenv(argv[i] + 1));
+				if (value == NULL)
+				{
+					argv[i][0] = '\0';
+					continue;
+				}
 			}
 
 			argv[i] = _realloc(argv[i],
 					sizeof(char) * _strlen(argv[i]),
 					sizeof(char) * (_strlen(value) + 1));
+
 			_strcpy(argv[i], value);
+			free(value);
 		}
 	}
 }
@@ -44,7 +53,7 @@ void handle_aliases(char **argv)
 	if (alias_env == NULL)
 		return;
 
-	for (i = 0; argv[i] != NULL; i++)
+	for (i = 0; i < 1 && argv[i] != NULL; i++)
 	{
 		len = _strlen(argv[i]);
 		alias_value = alias_env;

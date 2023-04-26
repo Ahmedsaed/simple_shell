@@ -17,6 +17,7 @@
 
 extern char **environ;
 extern char *prog_name;
+extern int status_code;
 
 /* Parsers */
 int parse_cmd(char *cmd, char **argv);
@@ -41,6 +42,7 @@ char *_strcat(char *dest, char *src);
 char *_strdup(char *s);
 char *_substr(char *src, int m, int n);
 int _atoi(char *str);
+char *_itoa(int num);
 
 /* getline functions */
 int _getline(char **lineprt, size_t *n, int stream);

@@ -1,6 +1,7 @@
 #include "main.h"
 
 char *prog_name;
+int status_code;
 
 void shell_prompt(void);
 void run_cmd(char *line_buffer);
@@ -107,6 +108,7 @@ void run_cmd(char *line_buffer)
 		for (j = 0; j < n; j++)
 			free(argv[j]);
 
+		status_code = cmd_status;
 		if (sep == '|' && cmd_status == 0)
 			break;
 		else if (sep == '&' && cmd_status != 0)
