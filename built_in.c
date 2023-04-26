@@ -15,7 +15,9 @@ void exit_shell(char *line_buffer, char **argv)
 	int j, status = 0;
 
 	if (argv[1] != NULL)
-		status = _atoi(argv[1]);
+		status = _atoi(argv[1]) % 256;
+	else
+		status = status_code;
 
 	for (j = 0; argv[j] != NULL; j++)
 		free(argv[j]);
