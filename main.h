@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <signal.h>
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <sys/stat.h>
@@ -63,7 +64,8 @@ void *_calloc(size_t count, size_t size);
 void print_str(char *s);
 void print_err(char *s);
 
-/* variables */
+/* shell handlers */
 void handle_variables(char **argv);
+void handle_aliases(char **argv);
 
 #endif
