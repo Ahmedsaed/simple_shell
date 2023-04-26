@@ -4,7 +4,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <signal.h>
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <sys/stat.h>
@@ -17,7 +16,6 @@
 
 extern char **environ;
 extern char *prog_name;
-extern int hist_count;
 
 /* Parsers */
 int parse_cmd(char *cmd, char **argv);
@@ -42,7 +40,6 @@ char *_strcat(char *dest, char *src);
 char *_strdup(char *s);
 char *_substr(char *src, int m, int n);
 int _atoi(char *str);
-char *_itoa(int num);
 
 /* getline functions */
 int _getline(char **lineprt, size_t *n, int stream);
@@ -65,8 +62,5 @@ void *_calloc(size_t count, size_t size);
 /* print functions */
 void print_str(char *s);
 void print_err(char *s);
-
-/* error functions */
-void error_127(char *cmd);
 
 #endif

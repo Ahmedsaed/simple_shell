@@ -1,9 +1,6 @@
 #include "main.h"
 
-/* Global program name */
 char *prog_name;
-/* Global History count */
-int hist_count;
 
 void shell_prompt(void);
 void run_cmd(char *line_buffer);
@@ -83,7 +80,6 @@ void run_cmd(char *line_buffer)
 
 	while (rest != NULL)
 	{
-		hist_count++;
 		split_cmds(rest, &sep, &cmd, &rest);
 		cmd_status = 0;
 
@@ -134,8 +130,7 @@ int run_sys_cmd(char **argv, int n)
 	prog_path = parse_path(argv[0]);
 	if (stat(prog_path, &st) != 0)
 	{
-		error_127(argv[0]);
-		free(prog_path);
+		perror(prog_name);
 		return (1);
 	}
 

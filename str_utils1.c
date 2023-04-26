@@ -9,6 +9,7 @@
  * @n: second character
  * Return: return string between m & n
  */
+
 char *_substr(char *src, int m, int n)
 {
 	int len = n - m, i;
@@ -34,6 +35,7 @@ char *_substr(char *src, int m, int n)
  *
  * Return: integer less than/equal to/greater than if s1 is found
  */
+
 int _strcmp(char *s1, char *s2)
 {
 	while (*s1 && *s2 && *s1 == *s2)
@@ -58,6 +60,7 @@ int _strcmp(char *s1, char *s2)
  *
  * Return: integer less than/equal to/greater than if s1 is found
  */
+
 int _strncmp(char *s1, char *s2, size_t n)
 {
 	while (n && *s1 && *s2 && *s1 == *s2)
@@ -87,6 +90,7 @@ int _strncmp(char *s1, char *s2, size_t n)
  * note: to avoid segmentation fault or wrong output,
  *					Size Of Dest + 1 < Size Of Src.
  */
+
 char *_strcpy(char *dest, char *src)
 {
 	char *ptr;
@@ -119,6 +123,7 @@ char *_strcpy(char *dest, char *src)
  * note: to avoid segmentation fault or wrong output,
  *					Size Of Dest + 1 < n.
  */
+
 char *_strncpy(char *dest, char *src, size_t n)
 {
 	char *ptr;
