@@ -9,15 +9,17 @@ char *setup_alias(char *alias, int len);
  * @name: the alias name to print it's value
  *
  * Note: if name is null, the function prints all aliases
+ *
+ * Return: 0 on sucess, 2 on failure
  */
-void print_alias(char *name)
+int print_alias(char *name)
 {
 	int i, len;
 	char *alias_env, *alias_value;
 
 	alias_env = _getenv("alias");
 	if (alias_env == NULL)
-		return;
+		return (2);
 
 	if (name != NULL)
 	{
@@ -53,6 +55,8 @@ void print_alias(char *name)
 			}
 		}
 	}
+
+	return (0);
 }
 
 /**
@@ -60,9 +64,9 @@ void print_alias(char *name)
  *
  * @new_value: the new alias to set
  *
- * @new_value
+ * Return: 0 on sucess, 2 on failure
  */
-void set_alias(char *new_value)
+int set_alias(char *new_value)
 {
 	int i, name_len;
 	char *alias_value, *alias_env, *new_alias;
@@ -70,7 +74,7 @@ void set_alias(char *new_value)
 	if (new_value == NULL)
 	{
 		print_err("Can't set alias: value is null");
-		return;
+		return (2);
 	}
 
 	name_len = _strchr(new_value, '=') - new_value;
@@ -84,7 +88,7 @@ void set_alias(char *new_value)
 		update_alias_env(new_alias, new_value, 1);
 		free(new_alias);
 		free(new_value);
-		return;
+		return (2);
 	}
 
 	new_alias = (char *)malloc(sizeof(char) *
@@ -93,7 +97,7 @@ void set_alias(char *new_value)
 	if (new_alias == NULL)
 	{
 		print_err("Can't set alias: couldn't allocate enough memory");
-		return;
+		return (2);
 	}
 	new_alias[0] = '\0';
 
@@ -113,6 +117,7 @@ void set_alias(char *new_value)
 	update_alias_env(new_alias, new_value, 1);
 	free(new_alias);
 	free(new_value);
+	return (0);
 }
 
 /**

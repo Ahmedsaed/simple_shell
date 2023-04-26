@@ -45,7 +45,7 @@ int main(int argc, char **argv)
 
 	if (isatty(STDIN_FILENO))
 		print_str("\n");
-	return (0);
+	return (status_code);
 }
 
 /**
@@ -95,9 +95,9 @@ void run_cmd(char *line_buffer)
 		else if (_strcmp(argv[0], "env") == 0)
 			_env();
 		else if (_strcmp(argv[0], "setenv") == 0)
-			cmd_status = (_setenv(argv[1], argv[2]) ? 1 : 0);
+			cmd_status = (_setenv(argv[1], argv[2]) ? 2 : 0);
 		else if (_strcmp(argv[0], "unsetenv") == 0)
-			cmd_status = (_unsetenv(argv[1]) ? 1 : 0);
+			cmd_status = (_unsetenv(argv[1]) ? 2 : 0);
 		else if (_strcmp(argv[0], "cd") == 0)
 			cmd_status = change_dir(argv[1]);
 		else if (_strcmp(argv[0], "alias") == 0)
@@ -137,7 +137,7 @@ int run_sys_cmd(char **argv, int n)
 	if (stat(prog_path, &st) != 0)
 	{
 		perror(prog_name);
-		return (1);
+		return (127);
 	}
 
 	child_pid = fork();
@@ -160,7 +160,7 @@ int run_sys_cmd(char **argv, int n)
 		wait(&child_status);
 
 	free(prog_path);
-	return (child_status);
+	return (child_status / 256);
 }
 
 /**

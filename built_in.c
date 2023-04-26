@@ -1,8 +1,7 @@
 #include "main.h"
 
-void print_alias(char *name);
-void set_alias(char *new_value);
-void update_variables(char **argv);
+int print_alias(char *name);
+int set_alias(char *new_value);
 
 /**
  * exit_shell - clears all allocated memory and
@@ -117,21 +116,21 @@ int change_dir(char *dir)
 	if (_setenv("OLDPWD", _getenv("PWD")) == -1)
 	{
 		print_err("Failed to update OLDPWD env variable");
-		return (1);
+		return (2);
 	}
 
 	if (chdir(dir) == -1)
 	{
 		free(dir);
 		perror(prog_name);
-		return (1);
+		return (2);
 	}
 
 	free(dir);
 	if (_setenv("PWD", getcwd(cwd, sizeof(cwd))) == -1)
 	{
 		print_err("Failed to update PWD env variable");
-		return (1);
+		return (2);
 	}
 
 	return (0);
@@ -142,22 +141,19 @@ int change_dir(char *dir)
  *
  * @tokens: a tockenized string of commands and arguments
  *
- * Return: 0 on sucess, 1 on fialure
+ * Return: 0 on sucess, 2 on fialure
  */
 int alias(char **tokens)
 {
-	int i;
+	int i, status = 0;
 
 	if (tokens[1] == NULL)
-		print_alias(NULL);
-	else
-	{
-		for (i = 1; tokens[i] != NULL; i++)
-			if (_strchr(tokens[i], '=') == NULL)
-				print_alias(tokens[i]);
-			else
-				set_alias(tokens[i]);
-	}
+		return (print_alias(NULL));
+	for (i = 1; tokens[i] != NULL; i++)
+		if (_strchr(tokens[i], '=') == NULL)
+			status |= print_alias(tokens[i]);
+		else
+			status |= set_alias(tokens[i]);
 
 	return (0);
 }

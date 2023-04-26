@@ -18,6 +18,7 @@ def run_test(shell_input):
     bash_process = subprocess.run("/bin/sh", input=bash_input, capture_output=True, text=True)
     bash_output = bash_process.stdout.strip()
     bash_stderr = bash_process.stderr.strip().replace("/bin/sh", "shell")
+    bash_process.returncode
 
     # compare the output of your shell and bash
     out, err = difflib.SequenceMatcher(None, shell_output, bash_output), difflib.SequenceMatcher(None, shell_stderr, bash_stderr)
