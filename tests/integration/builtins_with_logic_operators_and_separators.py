@@ -10,7 +10,7 @@ shell_input = "\n".join([
         "cd asdasdasd && echo \"you shouldn't read this\"",
         "",
         "cd asdasdasd || echo \"can you see me ;)\"",
-        "cd /build; cd - ; cd - ; cd -;"
+        "cd ./build; cd - ; cd - ; cd -;"
         ])
 
 run_test(shell_input)
