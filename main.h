@@ -63,4 +63,7 @@ void *_calloc(size_t count, size_t size);
 void print_str(char *s);
 void print_err(char *s);
 
+/* variables */
+void handle_variables(char **argv);
+
 #endif

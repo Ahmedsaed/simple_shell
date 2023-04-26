@@ -82,3 +82,6 @@ print_used_functions:
 
 clear_screen:
 	clear
+
+ssh_alx:
+	sshpass -p $$ALX_PASSWORD ssh $$ALX_USER@$$ALX_HOST

@@ -2,6 +2,7 @@
 
 void print_alias(char *name);
 void set_alias(char *new_value);
+void update_variables(char **argv);
 
 /**
  * exit_shell - clears all allocated memory and

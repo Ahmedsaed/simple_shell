@@ -21,4 +21,8 @@ alias
 alias l=loooooool
 alias e=er
 alias
+
+echo $PATH
+setenv name ahmed
+echo $name
 exit

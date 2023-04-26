@@ -14,7 +14,8 @@ def run_test(shell_input):
     shell_stderr = shell_process.stderr.strip().replace("./build/shell.out", "shell")
 
     # run bash and capture its output
-    bash_process = subprocess.run("/bin/sh", input=shell_input, capture_output=True, text=True)
+    bash_input = "\n".join([setup_bash_input(line) for line in shell_input.split('\n')])
+    bash_process = subprocess.run("/bin/sh", input=bash_input, capture_output=True, text=True)
     bash_output = bash_process.stdout.strip()
     bash_stderr = bash_process.stderr.strip().replace("/bin/sh", "shell")
 
@@ -38,3 +39,13 @@ def run_test(shell_input):
             dif = difflib.Differ()
             shell_diff = dif.compare(shell_output.splitlines(), bash_output.splitlines())
             print("\n".join(shell_diff))
+
+
+def setup_bash_input(line):
+    tokens = line.split(' ');
+    if tokens[0] == "setenv":
+        return f"export {tokens[1]}={tokens[2]}"
+    elif tokens[0] == "unsetenv":
+        return f"unset {tokens[1]}"
+    else:
+        return line

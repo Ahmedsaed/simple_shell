@@ -86,6 +86,7 @@ void run_cmd(char *line_buffer)
 		n = parse_cmd(cmd, argv);
 		if (n == 0)
 			break;
+		handle_variables(argv);
 
 		if (_strcmp(argv[0], "exit") == 0)
 			exit_shell(line_buffer, argv);
