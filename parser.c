@@ -59,7 +59,7 @@ int parse_cmd(char *cmd, char **argv)
  *
  * @cmd: the command
  *
- * Return: pointer to strings of right paths
+ * Return: pointer to strings of the right paths
  */
 char *parse_path(char *cmd)
 {

@@ -123,8 +123,14 @@ int run_sys_cmd(char **argv, int n)
 {
 	char *prog_path;
 	int child_pid, child_status = -1, j;
+	struct stat st;
 
 	prog_path = parse_path(argv[0]);
+	if (stat(prog_path, &st) != 0)
+	{
+		perror(prog_name);
+		return (1);
+	}
 
 	child_pid = fork();
 	if (child_pid == -1)
