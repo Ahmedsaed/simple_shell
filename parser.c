@@ -22,7 +22,7 @@ int parse_cmd(char *cmd, char **argv)
 			else if (quote == c)
 				quote = '\0';
 		}
-		else if ((c == ' ' || c == '\n') && !quote)
+		else if ((c == ' ' || c == '\n' || c == '\t') && !quote)
 		{
 			if (len)
 			{
@@ -131,8 +131,8 @@ void split_cmds(char *buffer, UNUSED char *separator, char **cmd, char **rest)
 				quote = '\0';
 		}
 
-		if (!((buffer[i] == ';' || (_strncmp(buffer + i, "||", 2) == 0 ||
-			_strncmp(buffer + i, "&&", 2) == 0) || buffer[i] == '#') && !quote))
+		if (!((buffer[i] == ';' || _strncmp(buffer + i, "||", 2) == 0 ||
+			_strncmp(buffer + i, "&&", 2) == 0 || buffer[i] == '#') && !quote))
 			continue;
 
 		*separator = buffer[i];
