@@ -111,7 +111,7 @@ int _setenv(char *name, char *value)
 	if (name == NULL || value == NULL || name[0] == '\0'
 			|| _strchr(name, '=') != NULL)
 	{
-		print_err("Error: Invalid Arguments!");
+		print_err("Error: Invalid Arguments!\n");
 		return (-1);
 	}
 
@@ -152,7 +152,7 @@ int _unsetenv(char *name)
 
 	if (name == NULL || name[0] == '\0' || _strchr(name, '=') != NULL)
 	{
-		print_err("Error: Invalid Arguments!");
+		print_err("Error: Invalid Arguments!\n");
 		return (-1);
 	}
 

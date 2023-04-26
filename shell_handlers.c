@@ -18,7 +18,7 @@ void handle_variables(char **argv)
 				value = _itoa(getpid());
 			else if (_strncmp(argv[i], "$?", 2) == 0)
 				value = _itoa(status_code);
-			else
+			else if (argv[i][1] != '\0')
 			{
 				value = _strdup(_getenv(argv[i] + 1));
 				if (value == NULL)
@@ -27,6 +27,8 @@ void handle_variables(char **argv)
 					continue;
 				}
 			}
+			else
+				continue;
 
 			argv[i] = _realloc(argv[i],
 					sizeof(char) * _strlen(argv[i]),
