@@ -68,7 +68,7 @@ int print_alias(char *name)
  */
 int set_alias(char *new_value)
 {
-	int i, name_len;
+	int i, name_len, alias_env_len;
 	char *alias_value, *alias_env, *new_alias;
 
 	if (new_value == NULL)
@@ -106,7 +106,9 @@ int set_alias(char *new_value)
 	for (i = 0; alias_env[i] != '\0'; i++)
 		if (alias_env[i] == ':')
 		{
-			if (_strncmp(alias_value, new_value, name_len) != 0)
+			alias_env_len = _strchr(alias_value, '=') - alias_value;
+			if (alias_env_len != name_len ||
+				_strncmp(alias_value, new_value, name_len) != 0)
 			{
 				alias_env[i] = '\0';
 				update_alias_env(new_alias, alias_value, 0);

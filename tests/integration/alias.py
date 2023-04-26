@@ -8,7 +8,8 @@ from integration_helper_functions import run_test
 shell_input = "\n".join([
         "alias",
         "alias l=lol",
-        "alias e=eoe name=ahmed"
+        "alias e=eoe name=ahmed",
+        "alias e name l"
     ])
 
 run_test(shell_input)

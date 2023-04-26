@@ -108,7 +108,7 @@ void run_cmd(char *line_buffer)
 		if (n == 0)
 			break;
 		handle_variables(argv);
-		/* handle_aliases(argv); */
+		handle_aliases(argv);
 
 		if (_strcmp(argv[0], "exit") == 0)
 			exit_shell(line_buffer, argv);
