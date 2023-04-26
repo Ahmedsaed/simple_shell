@@ -28,7 +28,7 @@ void error_127(char *cmd)
 	_strcat(error, hist_str);
 	_strcat(error, ": ");
 	_strcat(error, cmd);
-	_strcat(error, ": command not found\n");
+	_strcat(error, ": not found\n");
 
 	print_err(error);
 
