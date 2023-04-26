@@ -141,9 +141,9 @@ int change_dir(char *dir)
 /**
  * alias - alias built in command to print and set aliases
  *
- * @tokens: a tockenized string of commands and arguments
+ * @tokens: a tokenized string of commands and arguments
  *
- * Return: 0 on sucess, 2 on fialure
+ * Return: 0 on sucess, 1 on fialure
  */
 int alias(char **tokens)
 {
@@ -157,5 +157,5 @@ int alias(char **tokens)
 		else
 			status |= set_alias(tokens[i]);
 
-	return (0);
+	return ((status) ? 1 : 0);
 }

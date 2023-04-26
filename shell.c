@@ -25,6 +25,12 @@ int main(int argc, char **argv)
 	signal(SIGINT, sig_handler);
 	if (argc > 1)
 	{
+		if (access(argv[1], R_OK) == -1)
+		{
+			print_err("Can't access file");
+			return (126);
+		}
+
 		fd = open(argv[1], O_RDONLY);
 		if (fd == -1)
 		{
@@ -152,6 +158,11 @@ int run_sys_cmd(char **argv, int n)
 	{
 		perror(prog_name);
 		return (127);
+	}
+	if (access(prog_path, X_OK) == -1)
+	{
+		perror(prog_name);
+		return (126);
 	}
 
 	child_pid = fork();
