@@ -51,7 +51,7 @@ int main(int argc, char **argv)
 	{
 		if (isatty(fd))
 			shell_prompt();
-		if (_getline(&line_buffer, &line_size, fd) != -1)
+		if (getline(&line_buffer, &line_size, stdin) != -1)
 			run_cmd(line_buffer);
 		else
 			break;
