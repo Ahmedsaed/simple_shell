@@ -12,8 +12,8 @@
 
 #define BUFFER_SIZE 1024
 #define UNUSED __attribute__((unused))
-#define MAX_ARGS_COUNT 100
-#define MAX_ARG_LEN 100
+#define MAX_ARGS_COUNT 1000
+#define MAX_ARG_LEN 1000
 #define PATH_MAX 4096
 
 extern char **environ;
