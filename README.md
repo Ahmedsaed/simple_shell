@@ -14,3 +14,16 @@ Clone this repository into your working directory. For best results, files shoul
 ### Usage
 
 After compilation, the resulting program can run stand-alone, either in interactive or non-interactive mode.
+
+#### Included Built-Ins
+
+Our shell has support for the following built-in commands:
+
+| Command             | Definition                                                                                |
+| ------------------- | ----------------------------------------------------------------------------------------- |
+| exit [n]            | Exit the shell, with an optional exit status, n.                                          |
+| env                 | Print the environment.                                                                    |
+| setenv [var][value] | Set an environment variable and value. If the variable exists, the value will be updated. |
+| unsetenv [var]      | Remove an environment variable.                                                           |
+| cd [dir]            | Change the directory.                                                                     |
+| help [built-in]     | Read documentation for a built-in.                                                        |
