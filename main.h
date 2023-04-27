@@ -47,7 +47,7 @@ int _atoi(char *str);
 char *_itoa(int num);
 
 /* getline functions */
-ssize_t _getline(char **lineptr, size_t *n, int stream);
+int _getline(char **lineptr, size_t *n, int stream);
 
 /* environment functions */
 int setup_env(void);
