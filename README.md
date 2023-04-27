@@ -9,4 +9,8 @@ A simple UNIX command interpreter that replicates functionalities of the simple 
 
 ### Installation
 
-Clone this repository into your working directory. For best results, files should be compiled with GCC and the following flags: -Wall -Wextra -Werror -pedantic -std=gnu89
+Clone this repository into your working directory. For best results, files should be compiled with GCC and the following flags: -Wall -Wextra -Werror -pedantic -std=gnu89.
+
+### Usage
+
+After compilation, the resulting program can run stand-alone, either in interactive or non-interactive mode.
