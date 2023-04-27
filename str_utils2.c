@@ -107,10 +107,25 @@ char *_strchr(char *str, int ch)
  */
 int _atoi(char *str)
 {
-	int i, integer = 0;
+	int res = 0, sign = 1;
+	int i = 0;
 
-	for (i = 0; str[i] != '\0'; i++)
-		integer = integer * 10 + str[i] - '0';
+	while (str[i] == ' ')
+		i++;
 
-	return (integer);
+	if (str[i] == '-')
+	{
+		sign = -1;
+		i++;
+	}
+	else if (str[i] == '+')
+		i++;
+
+	while (str[i] >= '0' && str[i] <= '9')
+	{
+		res = res * 10 + (str[i] - '0');
+		i++;
+	}
+
+	return (sign * res);
 }

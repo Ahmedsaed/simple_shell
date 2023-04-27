@@ -27,14 +27,14 @@ int main(int argc, char **argv)
 	{
 		if (access(argv[1], R_OK) == -1)
 		{
-			print_err("Can't access file");
+			print_err("Can't access file.\n");
 			return (126);
 		}
 
 		fd = open(argv[1], O_RDONLY);
 		if (fd == -1)
 		{
-			print_err("Can't open file");
+			print_err("Can't open file.\n");
 			return (127);
 		}
 	}
