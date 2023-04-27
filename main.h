@@ -6,6 +6,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <signal.h>
+#include <errno.h>
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <sys/stat.h>
@@ -46,7 +47,7 @@ int _atoi(char *str);
 char *_itoa(int num);
 
 /* getline functions */
-int _getline(char **lineprt, size_t *n, int stream);
+ssize_t _getline(char **lineptr, size_t *n, int stream);
 
 /* environment functions */
 int setup_env(void);
