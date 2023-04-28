@@ -63,6 +63,8 @@ void *_realloc(void *ptr, unsigned int old_size,
 		unsigned int new_size);
 void *_memchr(char *s, char c, int n);
 void *_calloc(size_t count, size_t size);
+void *_recalloc(void *ptr, unsigned int old_size,
+		unsigned int new_size);
 
 /* print functions */
 void print_str(char *s);

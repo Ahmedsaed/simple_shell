@@ -99,3 +99,43 @@ void *_calloc(size_t count, size_t size)
 
 	return (ptr);
 }
+
+/**
+ * _recalloc - reallocates a block of memory
+ *
+ * @ptr: pointer to malloc'ated block
+ * @old_size: byte size of current block
+ * @new_size: byte size of new block
+ *
+ * Return: pointer to the new memory block.
+ */
+
+void *_recalloc(void *ptr, unsigned int old_size,
+		unsigned int new_size)
+{
+	int size, i;
+	char *p;
+
+	if (ptr == NULL)
+		return (malloc(new_size));
+	if (new_size == 0)
+		return (free(ptr), NULL);
+	if (new_size == old_size)
+		return (ptr);
+
+	p = malloc(new_size);
+
+	if (p == NULL)
+		return (NULL);
+
+	size = old_size < new_size ? old_size : new_size;
+
+	for (i = 0; i < size; i++)
+		p[i] = ((char *)ptr)[i];
+
+	for (; (unsigned int)i < new_size; i++)
+		p[i] = '\0';
+
+	free(ptr);
+	return (p);
+}

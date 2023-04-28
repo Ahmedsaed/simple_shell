@@ -133,19 +133,21 @@ int update_lineptr(char **lineptr, size_t *n, char delim,
  */
 int alloc_buffer(char **buffer, int old_size, int new_size)
 {
+	/* char *new_buffer; */
+
 	if (buffer == NULL)
 		return (-1);
 
 	if (*buffer == NULL)
 	{
-		*buffer = _calloc(new_size, sizeof(char));
+		*buffer = _calloc(new_size + 1, sizeof(char));
 		if (*buffer == NULL)
 			return (-1);
 		return (0);
 	}
 	else
 	{
-		*buffer = _realloc(*buffer, old_size, new_size);
+		*buffer = _recalloc(*buffer, old_size, new_size + 1);
 		if (*buffer == NULL)
 			return (-1);
 		return (0);
