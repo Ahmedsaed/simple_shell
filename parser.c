@@ -10,7 +10,7 @@
  */
 int parse_cmd(char *cmd, char **argv)
 {
-	int argc = 0, i = 0, len = 0;
+	int argc = 0, i = 0, len = 0, empty_str = 0;
 	char c, *arg, quote = '\0';
 
 	arg = malloc(sizeof(char) * (_strlen(cmd) + 1));
@@ -21,27 +21,26 @@ int parse_cmd(char *cmd, char **argv)
 			if (!quote)
 				quote = c;
 			else if (quote == c)
-				quote = '\0';
+				quote = '\0', empty_str = 1;
 		}
 		else if ((c == ' ' || c == '\n' || c == '\t') && !quote)
 		{
-			if (len)
+			if (len || empty_str)
 			{
 				arg[len] = '\0';
 				argv[argc++] = _strdup(arg);
-				len = 0;
+				len = 0, empty_str = 0;
 			}
 		}
 		else
 		{
-			if (len >= MAX_ARG_LEN)
-				return (-1);
 			if (c == '\\' && cmd[i + 1] != '\0')
 				c = cmd[++i];
 			arg[len++] = c;
+			empty_str = 0;
 		}
 	}
-	if (len)
+	if (len || empty_str)
 	{
 		arg[len] = '\0';
 		argv[argc++] = _strdup(arg);
@@ -68,16 +67,20 @@ char *parse_path(char *cmd)
 	struct stat st;
 
 	if (value == NULL)
-		return (cmd);
+	{
+		free(path);
+		return (_strdup(cmd));
+	}
 
 	len = _strlen(cmd);
+	path[0] = '\0';
 
 	while (value[i] != '\0')
 	{
 		while (value[i] != ':' && value[i] != '\0')
 			i++;
 
-		path = _realloc(path, sizeof(*path), i - k + len + 2);
+		path = _realloc(path, sizeof(char) * _strlen(path), i - k + len + 2);
 
 		_strncpy(path, value + k, (j = i - k));
 		path[j++] = '/';

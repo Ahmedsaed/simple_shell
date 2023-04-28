@@ -156,11 +156,13 @@ int run_sys_cmd(char **argv, int n)
 	prog_path = parse_path(argv[0]);
 	if (stat(prog_path, &st) != 0)
 	{
+		free(prog_path);
 		perror(prog_name);
 		return (127);
 	}
 	if (access(prog_path, X_OK) == -1)
 	{
+		free(prog_path);
 		perror(prog_name);
 		return (126);
 	}

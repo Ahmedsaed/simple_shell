@@ -80,7 +80,7 @@ char *_getenv(char *var)
 	{
 		for (idx = 0; environ[idx]; idx++)
 		{
-			if (_strncmp(var, environ[idx], len) == 0)
+			if (_strncmp(var, environ[idx], len) == 0 && environ[idx][len] == '=')
 				return (environ[idx] + len + 1);
 		}
 	}
