@@ -52,7 +52,10 @@ int main(int argc, char **argv)
 		if (isatty(fd))
 			shell_prompt();
 		if (_getline(&line_buffer, &line_size, fd) != -1)
+		{
+			printf("%s", line_buffer);
 			run_cmd(line_buffer);
+		}
 		else
 			break;
 	}
@@ -98,7 +101,7 @@ void run_cmd(char *line_buffer)
 	char *argv[MAX_ARGS_COUNT + 1], *cmd, *rest, sep;
 
 	rest = line_buffer;
-
+	printf("%s: %s", "Buffer", line_buffer);
 	while (rest != NULL)
 	{
 		split_cmds(rest, &sep, &cmd, &rest);

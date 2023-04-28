@@ -63,8 +63,11 @@ int _getline(char **lineptr, size_t *n, int stream)
 		}
 
 		if (buffer + bytes_read == buffer + current_buffer_size)
+		{
+			printf("updating size");
 			if (update_buffer(&buffer, &buffer_ptr, &current_buffer_size, bytes_read))
 				return (-1);
+		}
 
 		r = read(stream, buffer + bytes_read,
 				current_buffer_size - bytes_read);
