@@ -11,8 +11,9 @@
 int parse_cmd(char *cmd, char **argv)
 {
 	int argc = 0, i = 0, len = 0;
-	char c, arg[MAX_ARG_LEN], quote = '\0';
+	char c, *arg, quote = '\0';
 
+	arg = malloc(sizeof(char) * (_strlen(cmd) + 1));
 	for (i = 0; (c = cmd[i]) != '\0'; i++)
 	{
 		if ((c == '\'' || c == '\"'))
@@ -40,7 +41,6 @@ int parse_cmd(char *cmd, char **argv)
 			arg[len++] = c;
 		}
 	}
-
 	if (len)
 	{
 		arg[len] = '\0';
@@ -48,7 +48,7 @@ int parse_cmd(char *cmd, char **argv)
 	}
 
 	argv[argc] = NULL;
-
+	free(arg);
 	return (argc);
 }
 
