@@ -111,7 +111,7 @@ void run_cmd(char *line_buffer)
 		/* handle_aliases(argv); */
 
 		if (_strcmp(argv[0], "exit") == 0)
-			exit_shell(line_buffer, argv);
+			cmd_status = exit_shell(line_buffer, argv);
 		else if (_strcmp(argv[0], "env") == 0)
 			_env();
 		else if (_strcmp(argv[0], "setenv") == 0)

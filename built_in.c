@@ -9,13 +9,23 @@ int set_alias(char *new_value);
  *
  * @line_buffer: the buffer that contains the command and it's arguments
  * @argv: array of strings
+ *
+ * Return: 0 on sucess, 2 on failure
  */
-void exit_shell(char *line_buffer, char **argv)
+int exit_shell(char *line_buffer, char **argv)
 {
 	int j, status = 0;
 
 	if (argv[1] != NULL)
-		status = _atoi(argv[1]) % 256;
+	{
+		status = _atoi(argv[1]);
+		if (status < 0)
+		{
+			print_err("Illegal status code\n");
+			return (2);
+		}
+		status %= 256;
+	}
 	else
 		status = status_code;
 
@@ -26,6 +36,7 @@ void exit_shell(char *line_buffer, char **argv)
 	free(line_buffer);
 
 	exit(status);
+	return (0);
 }
 
 /**

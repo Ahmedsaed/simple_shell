@@ -27,7 +27,7 @@ char *parse_path(char *cmd);
 void split_cmds(char *buffer, char *separator, char **cmd, char **rest);
 
 /* Built-in shell functions */
-void exit_shell(char *line_buffer, char **argv);
+int exit_shell(char *line_buffer, char **argv);
 void _env(void);
 char *format_tilde(char *str);
 int change_dir(char *dir);
