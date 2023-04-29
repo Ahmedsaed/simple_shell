@@ -138,6 +138,9 @@ void split_cmds(char *buffer, UNUSED char *separator, char **cmd, char **rest)
 			_strncmp(buffer + i, "&&", 2) == 0 || buffer[i] == '#') && !quote))
 			continue;
 
+		if (buffer[i] == '#' && i > 0 && buffer[i - 1] != ' ')
+			continue;
+
 		*separator = buffer[i];
 		*rest = buffer + i + 1;
 
