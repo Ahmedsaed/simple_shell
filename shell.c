@@ -2,6 +2,7 @@
 
 char *prog_name;
 int status_code;
+int hist;
 
 void shell_prompt(void);
 void run_cmd(char *line_buffer);
@@ -27,14 +28,14 @@ int main(int argc, char **argv)
 	{
 		if (access(argv[1], R_OK) == -1)
 		{
-			print_err("Can't access file.\n");
+			error_126(argv[1]);
 			return (126);
 		}
 
 		fd = open(argv[1], O_RDONLY);
 		if (fd == -1)
 		{
-			print_err("Can't open file.\n");
+			error_127(argv[1]);
 			return (127);
 		}
 	}
@@ -102,7 +103,7 @@ void run_cmd(char *line_buffer)
 	while (rest != NULL)
 	{
 		split_cmds(rest, &sep, &cmd, &rest);
-		cmd_status = 0;
+		cmd_status = 0, hist++;
 
 		n = parse_cmd(cmd, argv);
 		if (n == 0)
@@ -157,13 +158,13 @@ int run_sys_cmd(char **argv, int n)
 	if (stat(prog_path, &st) != 0)
 	{
 		free(prog_path);
-		perror(prog_name);
+		error_127(argv[0]);
 		return (127);
 	}
-	if (access(prog_path, X_OK) == -1)
+	else if (access(prog_path, X_OK) == -1)
 	{
 		free(prog_path);
-		perror(prog_name);
+		error_126(argv[0]);
 		return (126);
 	}
 

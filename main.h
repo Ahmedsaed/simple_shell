@@ -20,6 +20,7 @@
 extern char **environ;
 extern char *prog_name;
 extern int status_code;
+extern int hist;
 
 /* Parsers */
 int parse_cmd(char *cmd, char **argv);
@@ -75,5 +76,9 @@ void print_err(char *s);
 /* shell handlers */
 void handle_variables(char **argv);
 void handle_aliases(char **argv);
+
+/* error handling */
+void error_127(char *cmd);
+void error_126(char *cmd);
 
 #endif
