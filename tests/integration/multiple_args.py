@@ -10,6 +10,7 @@ from integration_helper_functions import run_test
 shell_input = "\n".join([
         "ls -l /tmp",
         "echo \"hallo world\"",
+        "/bin/../bin/ls"
     ])
 
 run_test(shell_input)
