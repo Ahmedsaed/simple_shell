@@ -135,3 +135,38 @@ void error_cd(char *dir)
 	print_err(error);
 	free(error);
 }
+
+/**
+ * error_file - print error message for file failures.
+ *
+ * @file: file name.
+ */
+void error_file(char *file)
+{
+	char *error, *hist_str;
+	int len;
+
+	hist_str = _itoa(hist);
+	if (!hist_str)
+		return;
+
+	len = _strlen(file) + _strlen(prog_name) + _strlen(hist_str) + 16;
+	error = malloc(sizeof(char) * (len + 1));
+	if (!error)
+	{
+		free(hist_str);
+		return;
+	}
+
+	_strcpy(error, prog_name);
+	_strcat(error, ": ");
+	_strcat(error, hist_str);
+	_strcat(error, ": ");
+	_strcat(error, "Can't open ");
+	_strcat(error, file);
+	_strcat(error, "\n");
+
+	free(hist_str);
+	print_err(error);
+	free(error);
+}

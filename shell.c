@@ -30,7 +30,7 @@ int main(int argc, char **argv)
 	{
 		if (stat(argv[1], &st) != 0)
 		{
-			error_127(argv[1]);
+			error_file(argv[1]);
 			return (127);
 		}
 		if (access(argv[1], R_OK) == -1)

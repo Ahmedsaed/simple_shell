@@ -82,5 +82,6 @@ void error_127(char *cmd);
 void error_126(char *cmd);
 void error_exit(char *value);
 void error_cd(char *dir);
+void error_file(char *file);
 
 #endif
