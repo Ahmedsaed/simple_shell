@@ -3,7 +3,7 @@
 /**
  * error_127 - print error message for command not found failures.
  *
- * @cmd: command name.
+ * @cmd: command or file name.
  */
 void error_127(char *cmd)
 {
@@ -14,7 +14,7 @@ void error_127(char *cmd)
 	if (!hist_str)
 		return;
 
-	len = _strlen(prog_name) + _strlen(hist_str) + _strlen(cmd) + 16;
+	len = _strlen(cmd) + _strlen(prog_name) + _strlen(hist_str) + 16;
 	error = malloc(sizeof(char) * (len + 1));
 	if (!error)
 	{

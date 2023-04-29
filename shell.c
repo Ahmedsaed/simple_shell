@@ -24,12 +24,13 @@ int main(int argc, char **argv)
 	char *line_buffer = NULL;
 	struct stat st;
 
+	prog_name = argv[0];
 	signal(SIGINT, sig_handler);
 	if (argc > 1)
 	{
 		if (stat(argv[1], &st) != 0)
 		{
-			error_127(argv[0]);
+			error_127(argv[1]);
 			return (127);
 		}
 		if (access(argv[1], R_OK) == -1)
@@ -48,8 +49,6 @@ int main(int argc, char **argv)
 
 	if (setup_env())
 		return (-1);
-
-	prog_name = argv[0];
 
 	(void)argv;
 	(void)argc;
