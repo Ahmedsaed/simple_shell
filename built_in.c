@@ -18,13 +18,21 @@ int exit_shell(char *line_buffer, char **argv)
 
 	if (argv[1] == NULL)
 		status = status_code;
-	else if (!is_numeric(argv[1]) || (status = _atoi(argv[1])) < 0)
+	else if (!is_numeric(argv[1]))
 	{
 		print_err("Illegal number\n");
 		return (2);
 	}
 	else
+	{
+		status = _atoi(argv[1]);
+		if (status < 0)
+		{
+			print_err("Illegal number\n");
+			return (2);
+		}
 		status %= 256;
+	}
 
 	for (j = 0; argv[j] != NULL; j++)
 		free(argv[j]);
