@@ -20,7 +20,7 @@ int exit_shell(char *line_buffer, char **argv)
 		status = status_code;
 	else if (!is_numeric(argv[1]))
 	{
-		print_err("Illegal number\n");
+		error_exit(argv[1]);
 		return (2);
 	}
 	else
@@ -28,7 +28,7 @@ int exit_shell(char *line_buffer, char **argv)
 		status = _atoi(argv[1]);
 		if (status < 0)
 		{
-			print_err("Illegal number\n");
+			error_exit(argv[1]);
 			return (2);
 		}
 		status %= 256;

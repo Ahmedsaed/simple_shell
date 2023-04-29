@@ -80,5 +80,6 @@ void handle_aliases(char **argv);
 /* error handling */
 void error_127(char *cmd);
 void error_126(char *cmd);
+void error_exit(char *value);
 
 #endif
