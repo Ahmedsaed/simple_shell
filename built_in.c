@@ -16,7 +16,9 @@ int exit_shell(char *line_buffer, char **argv)
 {
 	int j, status = 0;
 
-	if (argv[1] == NULL || !is_numeric(argv[1]) || (status = _atoi(argv[1])) < 0)
+	if (argv[1] == NULL)
+		status = status_code;
+	else if (!is_numeric(argv[1]) || (status = _atoi(argv[1])) < 0)
 	{
 		print_err("Illegal number\n");
 		return (2);
