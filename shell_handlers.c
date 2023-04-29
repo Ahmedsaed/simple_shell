@@ -67,7 +67,7 @@ void handle_aliases(char **argv)
 			{
 				if (alias_env[j] == ':')
 				{
-					if (_strncmp(alias_value, argv[i], len) == 0)
+					if (_strncmp(alias_value, argv[i], len) == 0 && alias_value[len] == '=')
 					{
 						change = 1;
 						alias_env[j] = '\0';
