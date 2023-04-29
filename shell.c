@@ -160,7 +160,9 @@ int run_sys_cmd(char **argv, int n)
 	struct stat st;
 
 	prog_path = parse_path(argv[0]);
-	if (stat(prog_path, &st) != 0)
+	if ((_strcmp(prog_path, argv[0]) == 0 && _strncmp(prog_path, "./", 2) != 0 &&
+		prog_path[0] != '/') ||
+		stat(prog_path, &st) != 0)
 	{
 		free(prog_path);
 		error_127(argv[0]);
