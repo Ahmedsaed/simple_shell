@@ -12,4 +12,4 @@ shell_input = "\n".join([
         "e name"
     ])
 
-# run_test(shell_input)
+run_test(shell_input)

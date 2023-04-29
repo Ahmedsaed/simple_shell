@@ -48,36 +48,41 @@ void handle_variables(char **argv)
 void handle_aliases(char **argv)
 {
 
-	int i, j, len;
+	int i, j, len, change = 1;
 	char *alias_env, *alias_value;
 
 	alias_env = _getenv("alias");
 	if (alias_env == NULL)
 		return;
 
-	for (i = 0; i < 1 && argv[i] != NULL; i++)
+	while (change)
 	{
-		len = _strlen(argv[i]);
-		alias_value = alias_env;
-
-		for (j = 0; alias_env[j] != '\0'; j++)
+		change = 0;
+		for (i = 0; i < 1 && argv[i] != NULL; i++)
 		{
-			if (alias_env[j] == ':')
+			len = _strlen(argv[i]);
+			alias_value = alias_env;
+
+			for (j = 0; alias_env[j] != '\0'; j++)
 			{
-				if (_strncmp(alias_value, argv[i], len) == 0)
+				if (alias_env[j] == ':')
 				{
-					alias_env[j] = '\0';
-					argv[i] = _realloc(argv[i],
-							sizeof(char) * _strlen(argv[i]),
-							sizeof(char) * _strlen(alias_value) + 1);
-					_strncpy(argv[i],
-							alias_value + len + 2,
-							_strlen(alias_value) - len - 3);
-					alias_env[j] = ':';
-					break;
+					if (_strncmp(alias_value, argv[i], len) == 0)
+					{
+						change = 1;
+						alias_env[j] = '\0';
+						argv[i] = _realloc(argv[i],
+								sizeof(char) * _strlen(argv[i]),
+								sizeof(char) * _strlen(alias_value) + 1);
+						_strncpy(argv[i],
+								alias_value + len + 2,
+								_strlen(alias_value) - len - 3);
+						alias_env[j] = ':';
+						break;
+					}
+					else
+						alias_value = alias_env + j + 1;
 				}
-				else
-					alias_value = alias_env + j + 1;
 			}
 		}
 	}
