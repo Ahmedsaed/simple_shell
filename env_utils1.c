@@ -105,7 +105,7 @@ char *_getenv(char *var)
  */
 int _setenv(char *name, char *value)
 {
-	int len;
+	int env_len, name_len, val_len, i;
 	char *ev;
 
 	if (name == NULL || value == NULL || name[0] == '\0'
@@ -115,24 +115,39 @@ int _setenv(char *name, char *value)
 		return (-1);
 	}
 
-	_unsetenv(name);
-
-	ev = malloc(_strlen(name) + _strlen(value) + 2);
+	name_len = _strlen(name);
+	val_len = _strlen(value);
+	ev = malloc(name_len + val_len + 2);
 
 	if (ev == NULL)
 		return (-1);
+
+	for (i = 0; environ[i] != NULL; i++)
+	{
+		if (_strncmp(environ[i], name, name_len) == 0 &&
+			environ[i][name_len] == '=')
+		{
+			_strcpy(ev, name);
+			_strcat(ev, "=");
+			_strcat(ev, value);
+
+			free(environ[i]);
+			environ[i] = ev;
+			return (0);
+		}
+	}
 
 	_strcpy(ev, name);
 	_strcat(ev, "=");
 	_strcat(ev, value);
 
-	len = _getenvLen();
+	env_len = _getenvLen();
 
-	environ = _realloc(environ, sizeof(char *) * (len),
-			sizeof(char *) * (len + 3));
+	environ = _realloc(environ, sizeof(char *) * (env_len),
+			sizeof(char *) * (env_len + 2));
 
-	environ[len] = ev;
-	environ[len + 1] = NULL;
+	environ[env_len] = ev;
+	environ[env_len + 1] = NULL;
 	return (0);
 }
 
