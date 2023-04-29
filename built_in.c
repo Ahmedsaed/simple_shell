@@ -116,14 +116,17 @@ int change_dir(char *dir)
 {
 	char cwd[PATH_MAX];
 
-	if (dir == NULL)
+	if (dir == NULL || *dir == '\0')
+	{
 		dir = _strdup(_getenv("HOME"));
-
+		if (dir == NULL)
+			dir = _strdup(_getenv("PWD"));
+	}
 	else if (_strcmp(dir, "-") == 0)
 	{
 		dir = _strdup(_getenv("OLDPWD"));
 		if (dir == NULL)
-			dir = _getenv("PWD");
+			dir = _strdup(_getenv("PWD"));
 
 		print_str(dir);
 		print_str("\n");
@@ -139,8 +142,8 @@ int change_dir(char *dir)
 
 	if (chdir(dir) == -1)
 	{
+		error_cd(dir);
 		free(dir);
-		perror(prog_name);
 		return (2);
 	}
 

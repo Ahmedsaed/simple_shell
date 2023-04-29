@@ -128,7 +128,8 @@ int _setenv(char *name, char *value)
 
 	len = _getenvLen();
 
-	environ = _realloc(environ, sizeof(char *) * len, sizeof(char *) * (len + 2));
+	environ = _realloc(environ, sizeof(char *) * (len),
+			sizeof(char *) * (len + 3));
 
 	environ[len] = ev;
 	environ[len + 1] = NULL;
