@@ -65,3 +65,44 @@ int digits(int num)
 
 	return (len);
 }
+
+/**
+ * is_numeric - checks if a string could be converted to a number
+ * or not
+ *
+ * @s: string to check
+ *
+ * Return: 1 is true, 0 is false
+ */
+int is_numeric(char *s)
+{
+	if (s == NULL)
+		return (0);
+
+	if (_strlen(s) == 0)
+		return (0);
+
+	if (s[0] == '-' || s[0] == '+')
+		s++;
+
+	while (*s != '\0')
+	{
+		if (!is_digit(*s))
+			return (0);
+		s++;
+	}
+
+	return (1);
+}
+
+/**
+ * is_digit - checks if a character is a digit or not
+ *
+ * @c: the character to check
+ *
+ * Return: 1 is true, 0 is false
+ */
+int is_digit(char c)
+{
+	return (c >= '0' && c <= '9');
+}

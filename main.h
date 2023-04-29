@@ -45,6 +45,8 @@ char *_strdup(char *s);
 char *_substr(char *src, int m, int n);
 int _atoi(char *str);
 char *_itoa(int num);
+int is_numeric(char *s);
+int is_digit(char c);
 
 /* getline functions */
 int _getline(char **lineptr, size_t *n, int stream);
