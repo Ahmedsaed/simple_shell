@@ -22,10 +22,16 @@ int main(int argc, char **argv)
 	size_t line_size = 0;
 	int fd = STDIN_FILENO;
 	char *line_buffer = NULL;
+	struct stat st;
 
 	signal(SIGINT, sig_handler);
 	if (argc > 1)
 	{
+		if (stat(argv[1], &st) != 0)
+		{
+			error_127(argv[0]);
+			return (127);
+		}
 		if (access(argv[1], R_OK) == -1)
 		{
 			error_126(argv[1]);
