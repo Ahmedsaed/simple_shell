@@ -4,6 +4,8 @@
 
 This is a project developed as part of the ALX SE Program. It is a simple UNIX command interpreter (shell) program that simulates the functionalities of a Unix shell. Additional functions are also included. This program was written entirely in C.
 
+![Demo](https://user-images.githubusercontent.com/37080003/235351605-b7e2cb85-ce63-426f-93f6-bc8bea126f83.gif)
+
 ## Description
 
 The Simple Shell program is a command-line interface that accepts user input and executes corresponding commands. It provides a basic set of functionalities such as executing commands, changing directories, displaying environment variables, handling aliases, and exiting the shell.
@@ -42,7 +44,7 @@ To use the Makefile, open a terminal and navigate to the project directory. Then
 
 - `check_memory`: This recipe checks for memory leaks and errors using Valgrind. It requires the `Valgrind` program to be installed.
 
-- `all`: This is a special recipe that gets called when no arguments are being passed to `make`. This recipe will run `clear_screen check_style build run_tests check_memory check_forbidden_functions`. This means typing `make` in terminal will run these recipes in order.
+- `all`: This is a special recipe that gets called when no arguments are being passed to `make`. This recipe will run `clear_screen check_style build run_tests check_memory check_forbidden_functions`. This means that typing `make` in the terminal will run these recipes in order.
 
 - `check_forbidden_functions`: This recipe checks if any forbidden function is used in any C file in the project.
 
