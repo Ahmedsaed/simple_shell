@@ -5,7 +5,6 @@
  *				inside an environment.
  * Return: number of variables.
  */
-
 int _getenvLen(void)
 {
 	int count;
@@ -15,3 +14,5 @@ int _getenvLen(void)
 
 	return (count);
 }
+
+

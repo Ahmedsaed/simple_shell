@@ -6,7 +6,6 @@
  * @s: string
  * Return: length of string
  */
-
 size_t _strlen(char *s)
 {
 	int count = 0;
@@ -25,7 +24,6 @@ size_t _strlen(char *s)
  *
  * Return: dest if exists
  */
-
 char *_strcat(char *dest, char *src)
 {
 	char *ptr;
@@ -50,7 +48,6 @@ char *_strcat(char *dest, char *src)
  *
  * Return: pointer to new copy
  */
-
 char *_strdup(char *s)
 {
 	char *copy = NULL;
@@ -82,7 +79,6 @@ char *_strdup(char *s)
  * Return: If found, return a pointer value,
  *				If not, return NULL.
  */
-
 char *_strchr(char *str, int ch)
 {
 	int i;

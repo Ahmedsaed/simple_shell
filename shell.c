@@ -22,29 +22,14 @@ int main(int argc, char **argv)
 	size_t line_size = 0;
 	int fd = STDIN_FILENO;
 	char *line_buffer = NULL;
-	struct stat st;
 
 	prog_name = argv[0];
 	signal(SIGINT, sig_handler);
 	if (argc > 1)
 	{
-		if (stat(argv[1], &st) != 0)
-		{
-			error_file(argv[1]);
-			return (127);
-		}
-		if (access(argv[1], R_OK) == -1)
-		{
-			error_126(argv[1]);
-			return (126);
-		}
-
-		fd = open(argv[1], O_RDONLY);
-		if (fd == -1)
-		{
-			error_127(argv[1]);
-			return (127);
-		}
+		status_code = process_file(argv[1], &fd);
+		if (status_code)
+			return (status_code);
 	}
 
 	if (setup_env())

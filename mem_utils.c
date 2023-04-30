@@ -9,7 +9,6 @@
  * @src: source
  * @n: until a certain memory byte.
  */
-
 void _memcpy(void *dest, void *src, size_t n)
 {
 	size_t i;
@@ -29,7 +28,6 @@ void _memcpy(void *dest, void *src, size_t n)
  *
  * Return: pointer to the new memory block.
  */
-
 void *_realloc(void *ptr, unsigned int old_size,
 		unsigned int new_size)
 {
@@ -109,7 +107,6 @@ void *_calloc(size_t count, size_t size)
  *
  * Return: pointer to the new memory block.
  */
-
 void *_recalloc(void *ptr, unsigned int old_size,
 		unsigned int new_size)
 {

@@ -13,10 +13,7 @@ ls /tasasd && ls /var
 ls /var && ls /asdasd
 
 alias name="ahmed"
-alias l=lol e=eoe
-alias
-alias l=loooooool
-alias e=er
+alias name="ahmeeed"
 alias
 
 ls asdasd

@@ -84,4 +84,7 @@ void error_exit(char *value);
 void error_cd(char *dir);
 void error_file(char *file);
 
+/* File processing */
+int process_file(char *file, int *fd);
+
 #endif
